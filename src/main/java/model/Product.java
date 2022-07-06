@@ -7,17 +7,19 @@ public class Product {
     private String imgURL;
     private double price;
     private int quantity;
+    private int quantity_sold=0;
 
     public Product() {
     }
 
-    public Product(int idProduct, String nameProduct, Category category, String imgURL, double price, int quantity) {
+    public Product(int idProduct, String nameProduct, Category category, String imgURL, double price, int quantity, int quantity_sold) {
         this.idProduct = idProduct;
         this.nameProduct = nameProduct;
         this.category = category;
         this.imgURL = imgURL;
         this.price = price;
         this.quantity = quantity;
+        this.quantity_sold = quantity_sold;
     }
 
     public Product(String nameProduct, Category category, String imgURL, double price, int quantity) {
@@ -27,6 +29,9 @@ public class Product {
         this.price = price;
         this.quantity = quantity;
     }
+
+
+
 
     public int getIdProduct() {
         return idProduct;
@@ -74,5 +79,13 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getQuantity_sold() {
+        return quantity_sold;
+    }
+
+    public void setQuantity_sold(int quantity_sold) {
+        this.quantity_sold = quantity_sold;
     }
 }
