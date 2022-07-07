@@ -65,7 +65,15 @@ ProductDAO implements IDAO<Product> {
 
     @Override
     public boolean deleteByID(int id) {
-        return false;
+        String sql = "delete from sanpham WHERE idProduct = ?";
+        try (Connection connection = ConnectDB.getConnect()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            return preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
     }
 
     @Override
