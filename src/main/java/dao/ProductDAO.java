@@ -10,32 +10,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO implements IDAO<Product> {
+    private static final String INSERT_CATEGORY = "INSERT INTO sanPham (nameCategory) VALUES (?);";
+    private static final String SELECT_ALL = "select * from sanPham;";
+    private static final String SEARCH_CATEGORY = "select * from sanPham where nameCategory like ? ;";
+    private static final String DELETE_CATEGORY = "delete from sanPham where idCategory = ?;";
+    private static final String SELECT_PRODUCT= "select * from sanPham  where idProduct = ?;";
+
+    private  static  final String UPDATE_CATEGORY="UPDATE sanPham SET nameCategory=?;";
     CategoryDAO categoryDAO = new CategoryDAO();
+
 
     @Override
     public ArrayList<Product> selectAll() {
-        String sql = "select * from product";
-        List<Product> products = new ArrayList<>();
-        try (Connection connection = ConnectDB.getConnect()) {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String nameProduct = resultSet.getString("nameProduct");
-                Category category = categoryDAO.findCByID(resultSet.getInt("idCategory")) ;
-                String imgURL = resultSet.getString("imgURL");
-                double price = Double.parseDouble((resultSet.getString("price")));
-                int quantity = Integer.parseInt(resultSet.getString("quantity"));
-  products.add(new Product(nameProduct,category,imgURL,price,quantity));
-
+        ArrayList<Product> products =new ArrayList<>();
+        try (Connection connection= ConnectDB.getConnect(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)){
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                int idProduct=rs.getInt("idProduct");
+                int idCategory=rs.getInt("idCategory");
+                String name = rs.getString("nameProduct");
+                String imgURL = rs.getString("imgProduct");
+                double price =rs.getDouble("price");
+                int quantity =rs.getInt("quantity");
+                int quantity_sold =rs.getInt("quantity_sold");
+                products.add(new Product(idProduct,name,categoryDAO.findCByID(idCategory),imgURL,price,quantity,quantity_sold));
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-      return (ArrayList<Product>) products;
+        return products;
     }
-
 
     @Override
     public boolean insert(Product product) {
@@ -49,6 +53,22 @@ public class ProductDAO implements IDAO<Product> {
 
     @Override
     public Product findCByID(int id) {
+
+        try (Connection connection= ConnectDB.getConnect(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUCT)){
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet= preparedStatement.executeQuery();
+            resultSet.next();
+            int idProduct=resultSet.getInt("idProduct");
+            int idCategory=resultSet.getInt("idCategory");
+            String name = resultSet.getString("nameProduct");
+            String imgURL = resultSet.getString("imgProduct");
+            double price=resultSet.getDouble("price");
+            int quantity = resultSet.getInt("quantity");
+            int quantity_sold = resultSet.getInt("quantity_sold");
+            return new Product(idProduct,name,categoryDAO.findCByID(idCategory),imgURL,price,quantity,quantity_sold);
+        } catch (SQLException e) {
+
+        }
         return null;
     }
 
@@ -67,7 +87,7 @@ public class ProductDAO implements IDAO<Product> {
             return preparedStatement.execute();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
-            return false;
         }
+        return false;
     }
 }

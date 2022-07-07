@@ -13,30 +13,44 @@
     <title>Title</title>
 </head>
 <body>
-<table>
+<table hidden="true">
     <tr>
-        <th>STT</th>
-        <th>Loai</th>
-        <th>Ten</th>
-        <th>Anh</th>
-        <th>Gia</th>
-        <th>So luong</th>
+    <tr><th colspan="9" >Danh sách SP</th></tr>
+    <tr>
+        <td  colspan="9" style="text-align: left " >
+            <div class="hau">
+                <a href="/student?action=create">
+                    <button type="button" class="btn btn-primary">Create</button>
+                </a>
+                <form action="/student?action=search" method="post" style="margin: 0">
+                    <input type="search" placeholder="nhập vào tên" name="key"  class="search">
+                    <button type="submit" class="btn btn-info">Search</button>
+                </form>
+            </div>
+        </td>
+
     </tr>
-    <c:forEach var="p" items="${products}">
+    <th>MÃ SP</th>
+    <th>Loại SP</th>
+    <th>Tên SP</th>
+    <th>Ảnh SP</th>
+    <th>Giá</th>
+    <th>Số Lượng SP</th>
+    <th>Đã bán</th>
+    <th colspan="2">Hành động</th>
+    </tr>
+    <c:forEach var="p" items="${sessionScope.products}">
         <tr>
-            <td>${p.idProduct}
-            </td>
-
-
-
-            <td>${p.getCategory().getNameCategory()}</td>
+            <td>${p.idProduct}</td>
+            <td>${p.category.getNameCategory()}</td>
             <td>${p.nameProduct}</td>
-            <td>${p.imgURL}</td>
+            <td><img src="${p.imgURL}" alt="">   </td>
             <td>${p.price}</td>
             <td>${p.quantity}</td>
             <td>${p.quantity_sold}</td>
-
-            <td><a href="/cart?action=add&id=${sanpham.idProduct}"><button type="button" >Add</button>
+            <td><a href="/student?action=edit&id=${p.idProduct}"><button type="button" class="btn btn-warning">Edit</button>
+            </a></td>
+            <td><a  href="/student?action=delete&id=${p.idProduct}"  class="delete"  ><button type="button" class="btn btn-danger" >Delete</button>
             </a></td>
         </tr>
     </c:forEach>
