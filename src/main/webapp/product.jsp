@@ -27,6 +27,8 @@
             <td>${p.idProduct}
             </td>
 
+
+
             <td>${p.getCategory().getNameCategory()}</td>
             <td>${p.nameProduct}</td>
             <td>${p.imgURL}</td>
