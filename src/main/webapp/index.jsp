@@ -10,6 +10,10 @@
 <h1><%= "Hello World!" %>
 </h1>
 <br/>
-<a href="/admin">Admin</a>
+<form action="/admin" method="get">
+    <label for="myfile">Select a file:</label>
+    <input type="file" id="myfile" name="myfile"  accept="image/*">
+    <input type="submit" value="Gửi">
+</form>
 </body>
 </html>
