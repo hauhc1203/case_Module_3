@@ -3,7 +3,7 @@ package model;
 public class Product {
     private int idProduct;
     private String nameProduct;
-    private Category category ;
+    private Category category;
     private String imgURL;
     private double price;
     private int quantity;
