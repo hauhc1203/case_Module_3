@@ -10,6 +10,7 @@
 
 <html>
 <head>
+
     <title>Dash Board</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -28,6 +29,9 @@
         table{
             width: 1000px;
             margin: auto;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
         img{
             height: 160px;
@@ -39,11 +43,20 @@
             align-items: center;
             padding: 0 22px;
         }
+        .search{
+            height: 35px;
+        }
+
     </style>
 </head>
 <body>
+<div>
+    <nav-bar>
 
-<table>
+    </nav-bar>
+</div>
+
+<table hidden="true">
     <tr>
     <tr><th colspan="5" >Danh sách Loai SPh</th></tr>
     <tr>
@@ -53,7 +66,7 @@
                     <button type="button" class="btn btn-primary">Create</button>
                 </a>
                 <form action="/student?action=search" method="post" style="margin: 0">
-                    <input type="search" placeholder="nhập vào tên" name="key" required>
+                    <input type="search" placeholder="nhập vào tên" name="key" class="search" required>
                     <button type="submit" class="btn btn-info">Search</button>
                 </form>
             </div>
@@ -78,7 +91,49 @@
             </a></td>
         </tr>
     </c:forEach>
+</table>
 
+<table hidden="true">
+    <tr>
+    <tr><th colspan="9" >Danh sách SP</th></tr>
+    <tr>
+        <td  colspan="9" style="text-align: left " >
+            <div class="hau">
+                <a href="/student?action=create">
+                    <button type="button" class="btn btn-primary">Create</button>
+                </a>
+                <form action="/student?action=search" method="post" style="margin: 0">
+                    <input type="search" placeholder="nhập vào tên" name="key"  class="search">
+                    <button type="submit" class="btn btn-info">Search</button>
+                </form>
+            </div>
+        </td>
+
+    </tr>
+    <th>MÃ SP</th>
+    <th>Loại SP</th>
+    <th>Tên SP</th>
+    <th>Ảnh SP</th>
+    <th>Giá</th>
+    <th>Số Lượng SP</th>
+    <th>Đã bán</th>
+    <th colspan="2">Hành động</th>
+    </tr>
+    <c:forEach var="p" items="${sessionScope.products}">
+        <tr>
+            <td>${p.idProduct}</td>
+            <td>${p.category.getNameCategory()}</td>
+            <td>${p.nameProduct}</td>
+            <td><img src="${p.imgURL}" alt="">   </td>
+            <td>${p.price}</td>
+            <td>${p.quantity}</td>
+            <td>${p.quantity_sold}</td>
+            <td><a href="/student?action=edit&id=${p.idProduct}"><button type="button" class="btn btn-warning">Edit</button>
+            </a></td>
+            <td><a  href="/student?action=delete&id=${p.idProduct}"  class="delete"  ><button type="button" class="btn btn-danger" >Delete</button>
+            </a></td>
+        </tr>
+    </c:forEach>
 </table>
 </body>
 </body>
