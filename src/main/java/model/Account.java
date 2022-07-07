@@ -1,6 +1,7 @@
 package model;
 
 public class Account {
+    private int idAccount;
     private String phoneNumber;
     private String passWord;
     private String fullName;
@@ -15,15 +16,21 @@ public class Account {
         this.fullName = fullName;
     }
 
-    public Account(String phoneNumber, String passWord, String fullName, String role) {
+    public Account(int idAccount,String phoneNumber, String passWord, String fullName, String role) {
+        this.idAccount=idAccount;
         this.phoneNumber = phoneNumber;
         this.passWord = passWord;
         this.fullName = fullName;
         this.role = role;
     }
 
+    public int getIdAccount() {
+        return idAccount;
+    }
 
-
+    public void setIdAccount(int idAccount) {
+        this.idAccount = idAccount;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
