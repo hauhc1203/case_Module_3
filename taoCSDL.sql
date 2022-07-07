@@ -202,6 +202,9 @@ CREATE TABLE sanPham (
     imgProduct TEXT NOT NULL,
     price DOUBLE NOT NULL,
     quantity INT DEFAULT 0,
+
+	quantity_sold INT DEFAULT 0,
+    
     CONSTRAINT fk_1 FOREIGN KEY(idCategory) REFERENCES loaiSanPham(idCategory)
 );
 
