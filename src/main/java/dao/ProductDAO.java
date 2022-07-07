@@ -16,7 +16,7 @@ ProductDAO implements IDAO<Product> {
     private static final String INSERT_CATEGORY = "INSERT INTO sanPham (nameCategory) VALUES (?);";
     private static final String SELECT_ALL = "select * from sanPham;";
     private static final String SEARCH_CATEGORY = "select * from sanPham where nameCategory like ? ;";
-    private static final String DELETE_CATEGORY = "delete from sanPham where idCategory = ?;";
+    private static final String DELETE_PRODUCT = "delete from sanPham where idProduct = ?;";
     private static final String SELECT_PRODUCT = "select * from sanPham  where idProduct = ?;";
 
     private static final String UPDATE_CATEGORY = "UPDATE sanPham SET nameCategory=?;";
@@ -47,7 +47,7 @@ ProductDAO implements IDAO<Product> {
 
     @Override
     public boolean insert(Product product) {
-        String sql = "insert into sanpham value (?,?,?,?,?,?)";
+        String sql = "insert into sanpham value (?,?,?,?,?,?,?)";
         try (Connection connection = ConnectDB.getConnect()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, product.getIdProduct());
@@ -56,6 +56,7 @@ ProductDAO implements IDAO<Product> {
             preparedStatement.setString(4, product.getImgURL());
             preparedStatement.setDouble(5, product.getPrice());
             preparedStatement.setInt(6, product.getQuantity());
+            preparedStatement.setInt(7, product.getQuantity_sold());
             return preparedStatement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -65,9 +66,8 @@ ProductDAO implements IDAO<Product> {
 
     @Override
     public boolean deleteByID(int id) {
-        String sql = "delete from sanpham WHERE idProduct = ?";
         try (Connection connection = ConnectDB.getConnect()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PRODUCT);
             preparedStatement.setInt(1, id);
             return preparedStatement.execute();
         } catch (SQLException throwables) {
@@ -99,7 +99,7 @@ ProductDAO implements IDAO<Product> {
     @Override
     public boolean edit(Product product) {
         String sql = "UPDATE sanpham SET nameProduct = ?,imgProduct = ?, " +
-                "price = ?,quantity = ?, idCategory = ? WHERE (idProduct = ?)";
+                "price = ?,quantity = ?, idCategory = ?, Quantity_sold WHERE (idProduct = ?)";
         try (Connection connection = ConnectDB.getConnect()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, product.getIdProduct());
@@ -108,6 +108,7 @@ ProductDAO implements IDAO<Product> {
             preparedStatement.setString(4, product.getImgURL());
             preparedStatement.setDouble(5, product.getPrice());
             preparedStatement.setInt(6, product.getQuantity());
+            preparedStatement.setInt(7, product.getQuantity_sold());
 
             return preparedStatement.execute();
         } catch (SQLException throwables) {
