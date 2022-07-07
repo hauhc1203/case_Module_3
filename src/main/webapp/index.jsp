@@ -11,7 +11,7 @@
 </h1>
 <br/>
 <a href="/admin">Admin</a><br>
-<a href="/orders">Order</a><br>
+<a href="/orders?action=showByAcc&idAcc=2">Order</a><br>
 
 </body>
 </html>

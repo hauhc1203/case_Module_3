@@ -19,60 +19,75 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/orderDetail.css">
 
-    <style>
-        tr,th,td,table{
-            border: 1px solid black;
-            border-collapse: collapse;
-            text-align: center;
-        }
-        table{
-            width: 1000px;
-            margin: auto;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        img{
-            height: 160px;
-            width: 160px;
-        }
-        .hau{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 22px;
-        }
-        .search{
-            height: 35px;
-        }
-
-    </style>
 </head>
 <body>
-<div>
-    Mã đơn hàng: <input type="number" value="${sessionScope.order.getIdOrder()}" disabled>
-    Người mua : <input type="text" value="${sessionScope.order.getAccount()}" disabled>
+<div class="card">
+    <div class="title">Chi tiết hóa đơn</div>
+    <div class="info">
+        <div class="row">
+            <div class="col-12">
+                <span class="heading">Người mua: </span>
+                <span class="details">${sessionScope.order.getAccount().getFullName()}</span>
+            </div>
+            <div class="col-12">
+                <span class="heading">Địa chỉ: </span>
+                <span class="details">${sessionScope.order.getAddress()}</span>
+            </div>
+            <div class="col-12">
+                <span class="heading">Trạng thái:  </span>
+                <span class="details">${sessionScope.order.getStatusDelivery()}</span>
+            </div>
+            <div class="col-7">
+                <span class="heading">Ngày mua: </span><br>
+                <span class="details">${sessionScope.order.getOrDate()}</span>
+            </div>
+            <div class="col-5 pull-right">
+                <span class="heading">Mã đơn hàng</span><br>
+                <span class="details">${sessionScope.order.getIdOrder()}</span>
+            </div>
+        </div>
+    </div>
+    <div class="pricing">
+        <div class="row">
+            <div class="col-6">
+                <span class="name">Tên Sản Phẩm</span>
+            </div>
+            <div class="col-3">
+                <span class="">Số Lượng</span>
+            </div>
+            <div class="col-3">
+                <span class="price">Thành tiền</span>
+            </div>
+            <c:forEach var="entry" items="${sessionScope.order.getDetail()}">
+                <div class="col-6">
+                    <span class="name">${entry.getKey().getNameProduct()}</span>
+                </div>
+                <div class="col-3">
+                    <span class="">${entry.getValue()}</span>
+                </div>
+                <div class="col-3">
+                    <span class="price">${entry.getKey().getPrice()*entry.getValue()} VNĐ</span>
+                </div>
+            </c:forEach>
 
+        </div>
 
-    <table >
-        <tr>
-        <tr><th colspan="8" >Chi tiết đơn hàng </th></tr>
-        <th>Tên sản phẩm</th>
-        <th>Số lượng</th>
+    </div>
+    <div class="total">
+        <div class="row">
+            <div class="col-9">Tổng </div>
+            <div class="col-3"><big>${sessionScope.order.getTotalValue()} VNĐ</big></div>
+        </div>
+    </div>
 
-        </tr>
-        <c:forEach var="entry" items="${sessionScope.order.getDetail()}">
-            <tr>
-                <td style="text-align: left ;">${entry.getKey().getNameProduct()}</td>
-                <td>${entry.getValue()}</td>
-            </tr>
-        </c:forEach>
-    </table>
+    <div class="col-12" style="display: flex;justify-content: center">
+       <a href="/orders?action=${sessionScope.action}" style="color: white"> <button class="btn btn-primary">Trở về</button></a>
+    </div>
+
 </div>
 
 
-
-</body>
 </body>
 </html>
