@@ -2,7 +2,7 @@ package model;
 
 import java.util.Map;
 
-public class Cart {
+public class Cart extends Product{
     private Account account;
     private Map<Product,Integer> detail;
     private double totalValue;
@@ -12,6 +12,7 @@ public class Cart {
         this.detail = detail;
         this.totalValue = totalValue;
     }
+
 
     public Account getAccount() {
         return account;

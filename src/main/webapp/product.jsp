@@ -13,7 +13,7 @@
     <title>Title</title>
 </head>
 <body>
-<table hidden="true">
+<table>
     <tr>
     <tr><th colspan="9" >Danh sách SP</th></tr>
     <tr>
@@ -39,7 +39,7 @@
     <th>Đã bán</th>
     <th colspan="2">Hành động</th>
     </tr>
-    <c:forEach var="p" items="${sessionScope.products}">
+    <c:forEach var="p" items="${products}">
         <tr>
             <td>${p.idProduct}</td>
             <td>${p.category.getNameCategory()}</td>
@@ -48,9 +48,7 @@
             <td>${p.price}</td>
             <td>${p.quantity}</td>
             <td>${p.quantity_sold}</td>
-            <td><a href="/student?action=edit&id=${p.idProduct}"><button type="button" class="btn btn-warning">Edit</button>
-            </a></td>
-            <td><a  href="/student?action=delete&id=${p.idProduct}"  class="delete"  ><button type="button" class="btn btn-danger" >Delete</button>
+            <td><a href="/add-to-cart?action=add&id=${p.idProduct}"><button type="button" class="btn btn-warning">Add Cart</button>
             </a></td>
         </tr>
     </c:forEach>
