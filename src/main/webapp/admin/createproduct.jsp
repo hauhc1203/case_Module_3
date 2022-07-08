@@ -20,21 +20,21 @@
     <a href="/admin/dashboard.jsp">Quay lại trang Sản phẩm</a>
 </p>
 
-<form action="/admin/createproduct.jsp" method="post">
+<form action="/admin?action=create" method="post">
     <fieldset>
         <legend>Thông tin sản phẩm</legend>
         <table>
-            <tr>
-                <td>Mã SP:</td>
-                <td><input type="text" name="id" id="id"></td>
-            </tr>
+<%--            <tr>--%>
+<%--                <td>Mã SP:</td>--%>
+<%--                <td><input type="text" name="id" id="id"></td>--%>
+<%--            </tr>--%>
             <tr>
                 <td>Loại SP</td>
-                <td><input type="text" name="category" id="category">
-                    <c:forEach var="c" items="${category}">
+                <td><select  name="category" id="category">
+                    <c:forEach var="c" items="${sessionScope.categories}">
                         <option value="${c.idCategory}">${c.nameCategory}</option>
                     </c:forEach>
-               </td>
+                </select>  </td>
             </tr>
             <tr>
                 <td>Tên SP</td>

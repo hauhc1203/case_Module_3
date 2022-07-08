@@ -48,19 +48,16 @@ public class AdminServlet extends HttpServlet {
         }
         switch (action) {
             case "create":
-                products = productDAO.selectAll();
-                req.setAttribute("products", products);
                 requestDispatcher = req.getRequestDispatcher("/createproduct.jsp");
                 requestDispatcher.forward(req, resp);
                 break;
             case "edit":
-
                 id = Integer.parseInt(req.getParameter("id"));
                 Product product = productDAO.selectAll().get(id);
                 categories = categoryDAO.selectAll();
                 session.setAttribute("categories", categories);
                 session.setAttribute("products", products);
-                requestDispatcher = req.getRequestDispatcher("/admin/editproduct.jsp");
+                requestDispatcher = req.getRequestDispatcher("editproduct.jsp");
                 requestDispatcher.forward(req, resp);
                 break;
             case "delete":
@@ -92,17 +89,17 @@ public class AdminServlet extends HttpServlet {
         switch (action) {
             case "create":
                 int idProduct = productDAO.selectAll().size() + 1;
-                int idCategory = Integer.parseInt(req.getParameter("Category"));
+                int idCategory = Integer.parseInt(req.getParameter("category"));
                 String nameProduct = req.getParameter("nameProduct");
                 String imgURL = req.getParameter("imgURL");
                 Double price = Double.valueOf(req.getParameter("price"));
                 int quantity = Integer.parseInt(req.getParameter("quantity"));
-                int quanlity_sold = Integer.parseInt(req.getParameter("quanlity_sold"));
+                int quanlity_sold = Integer.parseInt(req.getParameter("quantity_sold"));
 
 
                 Product product = new Product(idProduct, nameProduct, categoryDAO.findCByID(idCategory), imgURL, price, quantity, quanlity_sold);
                 productDAO.insert(product);
-                resp.sendRedirect("/admin/dashboard.jsp");
+                resp.sendRedirect("/admin");
                 break;
         }
     }
