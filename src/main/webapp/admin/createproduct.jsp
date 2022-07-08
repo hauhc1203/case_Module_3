@@ -17,45 +17,45 @@
     </c:if>
 </p>
 <p>
-    <a href="/student">Back to student list</a>
+    <a href="/admin/dashboard.jsp">Quay lại trang Sản phẩm</a>
 </p>
 
-<form action="/student?action=create" method="post">
+<form action="/admin/createproduct.jsp" method="post">
     <fieldset>
-        <legend>Studen information</legend>
+        <legend>Thông tin sản phẩm</legend>
         <table>
             <tr>
-                <td>Id:</td>
+                <td>Mã SP:</td>
                 <td><input type="text" name="id" id="id"></td>
             </tr>
             <tr>
-                <td>Name:</td>
-                <td><input type="text" name="name" id="name"></td>
-            </tr>
-            <tr>
-                <td>Birth:</td>
-                <td><input type="date" name="birth" id="Birth"></td>
-            </tr>
-            <tr>
-                <td>Address:</td>
-                <td><input type="text" name="address" id="address"></td>
-            </tr>
-            <tr>
-                <td>Phone:</td>
-                <td><input type="text" name="phone" id="phone"></td>
-            </tr>
-            <tr>
-                <td>Email:</td>
-                <td><input type="text" name="email" id="email"></td>
-            </tr>
-            <tr>
-                <td>Class:</td>
-                <td><select name="class" id="class">
-                    <c:forEach var="c" items="${classStudent}">
-                        <option value="${c.id}">${c.name}</option>
+                <td>Loại SP</td>
+                <td><input type="text" name="category" id="category">
+                    <c:forEach var="c" items="${category}">
+                        <option value="${c.idCategory}">${c.nameCategory}</option>
                     </c:forEach>
-                </select></td>
+               </td>
             </tr>
+            <tr>
+                <td>Tên SP</td>
+                <td><input type="text" name="nameProduct" id="nameProduct"></td>
+            </tr>
+            <tr>
+                <td>Ảnh</td>
+                <td><input type="text" name="imgURL" id="imgURL"></td>
+            </tr>
+            <tr>
+                <td>Giá</td>
+                <td><input type="text" name="price" id="price"></td>
+            </tr>
+            <tr>
+                <td>Số lượng</td>
+                <td><input type="number" name="quantity" id="quantity"></td>
+            </tr>
+            <tr>
+            <tr>
+                <td>Đã bán</td>
+                <td><input type="number" name="quantity_sold" id="quantity_sold"></td>
             <tr>
                 <td></td>
                 <td><input type="submit" value="Create customer"></td>

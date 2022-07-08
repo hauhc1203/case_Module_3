@@ -14,10 +14,10 @@ public class
 ProductDAO implements IDAO<Product> {
 
     private static final String INSERT_CATEGORY = "INSERT INTO sanPham (nameCategory) VALUES (?);";
-    private static final String SELECT_ALL = "select * from sanPham;";
+    private static final String SELECT_ALL = "select * from sanpham;";
     private static final String SEARCH_CATEGORY = "select * from sanPham where nameCategory like ? ;";
-    private static final String DELETE_PRODUCT = "delete from sanPham where idProduct = ?;";
-    private static final String SELECT_PRODUCT = "select * from sanPham  where idProduct = ?;";
+    private static final String DELETE_PRODUCT = "delete from sanpham where idProduct = ?;";
+    private static final String SELECT_PRODUCT = "select * from sanpham  where idProduct = ?;";
 
     private static final String UPDATE_CATEGORY = "UPDATE sanPham SET nameCategory=?;";
 
@@ -57,11 +57,13 @@ ProductDAO implements IDAO<Product> {
             preparedStatement.setDouble(5, product.getPrice());
             preparedStatement.setInt(6, product.getQuantity());
             preparedStatement.setInt(7, product.getQuantity_sold());
-            return preparedStatement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            return false;
+            preparedStatement.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+
         }
+        return false;
     }
 
     @Override
@@ -69,9 +71,10 @@ ProductDAO implements IDAO<Product> {
         try (Connection connection = ConnectDB.getConnect()) {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PRODUCT);
             preparedStatement.setInt(1, id);
-            return preparedStatement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            preparedStatement.execute();
+            return true;
+
+        } catch (SQLException e) {
             return false;
         }
     }
