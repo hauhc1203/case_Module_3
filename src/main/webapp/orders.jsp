@@ -39,7 +39,7 @@
         }
         .hau{
             display: flex;
-            justify-content: space-between;
+            justify-content: right;
             align-items: center;
             padding: 0 22px;
         }
@@ -63,9 +63,7 @@
     <tr>
         <td  colspan="8" style="text-align: left " >
             <div class="hau">
-                <a href="/student?action=create">
-                    <button type="button" class="btn btn-primary">Create</button>
-                </a>
+
                 <form action="/student?action=search" method="post" style="margin: 0">
                     <input type="search" placeholder="nhập vào tên" name="key"  class="search">
                     <button type="submit" class="btn btn-info">Search</button>
@@ -95,11 +93,27 @@
             <td>${order.totalValue}</td>
             <td><a href="/orders?action=showDetail&idOrder=${order.idOrder}"><button type="button" class="btn btn-warning">Chi tiết</button>
             </a></td>
-            <td><a  href="/student?action=delete&id=${order.idOrder}"  class="delete"  ><button type="button" class="btn btn-danger" >Hủy</button>
+            <td><a  content="${order.statusDelivery}" class="cancel"  ><button type="button" class="btn btn-danger" >Hủy</button>
             </a></td>
         </tr>
+<%--        href="/orders?action=cancel&id=${order.idOrder}"--%>
     </c:forEach>
 </table>
 </body>
-</body>
+<script>
+    let cancelLinks = document.querySelectorAll('.cancel');
+
+    for (let i = 0; i < cancelLinks.length; i++) {
+        cancelLinks[i].addEventListener('click', function(event) {
+            event.preventDefault();
+            let trangThai=  cancelLinks[i].getAttribute("content")
+
+            if (trangThai!="Đang giao") {
+                window.location.href = this.getAttribute('href');
+            }else {
+                alert("đơn hàng đang được  giao. Không thể Hủy ")
+            }
+        });
+    }
+</script>
 </html>

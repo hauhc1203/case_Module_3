@@ -27,26 +27,29 @@
     <div class="title">Chi tiết hóa đơn</div>
     <div class="info">
         <div class="row">
+            <div class="col-7 pull-right">
+                <span class="heading">Mã đơn hàng</span>
+                <span class="details">${sessionScope.order.getIdOrder()}</span>
+            </div>
+            <div class="col-5">
+                <span class="heading">Ngày mua: </span>
+                <span class="details">${sessionScope.order.getOrDate()}</span>
+            </div>
+
+            <div class="col-7">
+                <span class="heading">Địa chỉ: </span>
+                <span class="details">${sessionScope.order.getAddress()}</span>
+            </div>
+            <div class="col-5">
+                <span class="heading">Trạng thái:  </span>
+                <span class="details">${sessionScope.order.getStatusDelivery()}</span>
+            </div>
             <div class="col-12">
                 <span class="heading">Người mua: </span>
                 <span class="details">${sessionScope.order.getAccount().getFullName()}</span>
             </div>
-            <div class="col-12">
-                <span class="heading">Địa chỉ: </span>
-                <span class="details">${sessionScope.order.getAddress()}</span>
-            </div>
-            <div class="col-12">
-                <span class="heading">Trạng thái:  </span>
-                <span class="details">${sessionScope.order.getStatusDelivery()}</span>
-            </div>
-            <div class="col-7">
-                <span class="heading">Ngày mua: </span><br>
-                <span class="details">${sessionScope.order.getOrDate()}</span>
-            </div>
-            <div class="col-5 pull-right">
-                <span class="heading">Mã đơn hàng</span><br>
-                <span class="details">${sessionScope.order.getIdOrder()}</span>
-            </div>
+
+
         </div>
     </div>
     <div class="pricing">
@@ -83,7 +86,7 @@
     </div>
 
     <div class="col-12" style="display: flex;justify-content: center">
-       <a href="/orders?action=${sessionScope.action}" style="color: white"> <button class="btn btn-primary">Trở về</button></a>
+       <a href="/orders?action=${sessionScope.action}&idAcc=${sessionScope.idAcc}" style="color: white"> <button class="btn btn-primary">Trở về</button></a>
     </div>
 
 </div>

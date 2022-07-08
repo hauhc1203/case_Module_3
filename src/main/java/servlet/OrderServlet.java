@@ -32,17 +32,19 @@ public class OrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session=req.getSession();
         String action=req.getParameter("action");
-        session.setAttribute("acction",action);
+
         if (action==null){
             action="";
         }
 
         switch (action){
             case "show":
-
+                session.setAttribute("action",action);
                 show(req,resp,session);
                 break;
             case "showByAcc":
+                session.setAttribute("action",action);
+
                 showByAcc(req,resp,session);
                 break;
             case "showDetail":
@@ -73,6 +75,7 @@ public class OrderServlet extends HttpServlet {
         int idAcc= Integer.parseInt(req.getParameter("idAcc"));
 
         orders=orderDAO.selectAllByACC(idAcc);
+        session.setAttribute("idAcc",idAcc);
         session.setAttribute("orders",orders);
         resp.sendRedirect("/orders.jsp");
     }

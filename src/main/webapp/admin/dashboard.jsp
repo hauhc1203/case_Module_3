@@ -29,9 +29,9 @@
         table{
             width: 1000px;
             margin: auto;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
+            /*position: absolute;*/
+            /*left: 50%;*/
+            /*transform: translateX(-50%);*/
         }
         img{
             height: 160px;
@@ -56,7 +56,7 @@
     </nav-bar>
 </div>
 
-<table hidden="true">
+<table >
     <tr>
     <tr><th colspan="5" >Danh sách Loai SPh</th></tr>
     <tr>
@@ -93,7 +93,7 @@
     </c:forEach>
 </table>
 
-<table hidden="true">
+<table >
     <tr>
     <tr><th colspan="9" >Danh sách SP</th></tr>
     <tr>

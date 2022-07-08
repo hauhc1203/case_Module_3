@@ -4,12 +4,14 @@ import connect.ConnectDB;
 import model.Category;
 import model.Product;
 
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductDAO implements IDAO<Product> {
+
     private static final String INSERT_CATEGORY = "INSERT INTO sanPham (nameCategory) VALUES (?);";
     private static final String SELECT_ALL = "select * from sanPham;";
     private static final String SEARCH_CATEGORY = "select * from sanPham where nameCategory like ? ;";
@@ -17,8 +19,8 @@ public class ProductDAO implements IDAO<Product> {
     private static final String SELECT_PRODUCT= "select * from sanPham  where idProduct = ?;";
 
     private  static  final String UPDATE_CATEGORY="UPDATE sanPham SET nameCategory=?;";
-    CategoryDAO categoryDAO = new CategoryDAO();
 
+    CategoryDAO categoryDAO=new CategoryDAO();
 
     @Override
     public ArrayList<Product> selectAll() {
@@ -53,7 +55,6 @@ public class ProductDAO implements IDAO<Product> {
 
     @Override
     public Product findCByID(int id) {
-
         try (Connection connection= ConnectDB.getConnect(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUCT)){
             preparedStatement.setInt(1,id);
             ResultSet resultSet= preparedStatement.executeQuery();
@@ -74,20 +75,6 @@ public class ProductDAO implements IDAO<Product> {
 
     @Override
     public boolean edit(Product product) {
-        String sql = "UPDATE product SET name = ?,dateOfBirth = ?, " +
-                "address = ?,email = ?,phoneNumber = ?, idClass=? WHERE (id = ?)";
-        try (Connection connection = ConnectDB.getConnect()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(2,product.getCategory().getIdCategory());
-            preparedStatement.setString(1, product.getNameProduct());
-            preparedStatement.setString(2, String.valueOf(product.getImgURL()));
-            preparedStatement.setDouble(3, product.getPrice());
-            preparedStatement.setInt(4, product.getQuantity());
-
-            return preparedStatement.execute();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
         return false;
     }
 }
