@@ -19,14 +19,11 @@ import java.io.IOException;
         protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
             String phoneNumber = request.getParameter("phoneNumber");
             String password = request.getParameter("password");
-
             Account account = accountDao.getAccount(phoneNumber, password);
             if (account != null) {
-                Login.account = account;
+               Login.account = account;
                 if (account.getRole().equals("user")) {
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("/Sign_Up.jsp");
-                    dispatcher.forward(request, resp);
-//                    resp.sendRedirect("/Sign_Up.jsp");
+                    resp.sendRedirect("/huy");
                 } else {
                     resp.sendRedirect("/admin");
                 }
