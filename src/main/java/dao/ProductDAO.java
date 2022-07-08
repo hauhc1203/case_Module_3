@@ -20,6 +20,9 @@ public class ProductDAO implements IDAO<Product> {
 
     private  static  final String UPDATE_CATEGORY="UPDATE sanPham SET nameCategory=?;";
 
+    private  static  final  String SELECT_BY_CATEGORY="select * from sanPham where idCategory=?;";
+
+    private  static  final  String SELECT_TOP_3="select * from sanPham  order by quantity_sold DESC limit 3;";
     CategoryDAO categoryDAO=new CategoryDAO();
 
     @Override
@@ -76,5 +79,51 @@ public class ProductDAO implements IDAO<Product> {
     @Override
     public boolean edit(Product product) {
         return false;
+    }
+
+
+
+    public ArrayList<Product> selectTop3() {
+        ArrayList<Product> products =new ArrayList<>();
+        try (Connection connection= ConnectDB.getConnect(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_TOP_3)){
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                int idProduct=rs.getInt("idProduct");
+                int idCategory=rs.getInt("idCategory");
+                String name = rs.getString("nameProduct");
+                String imgURL = rs.getString("imgProduct");
+                double price =rs.getDouble("price");
+                int quantity =rs.getInt("quantity");
+                int quantity_sold =rs.getInt("quantity_sold");
+                products.add(new Product(idProduct,name,categoryDAO.findCByID(idCategory),imgURL,price,quantity,quantity_sold));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return products;
+    }
+
+
+    public ArrayList<Product> selectByCategory(int idCategory) {
+        ArrayList<Product> products =new ArrayList<>();
+        try (Connection connection= ConnectDB.getConnect(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_CATEGORY)){
+            preparedStatement.setInt(1,idCategory);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()){
+                int idProduct=rs.getInt("idProduct");
+                String name = rs.getString("nameProduct");
+                String imgURL = rs.getString("imgProduct");
+                double price =rs.getDouble("price");
+                int quantity =rs.getInt("quantity");
+                int quantity_sold =rs.getInt("quantity_sold");
+                products.add(new Product(idProduct,name,categoryDAO.findCByID(idCategory),imgURL,price,quantity,quantity_sold));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return products;
     }
 }

@@ -13,7 +13,7 @@
 <a href="/admin">Admin</a><br>
 <a href="/orders?action=showByAcc&idAcc=3">Order</a><br>
 
-<a href="/home.jsp">Order</a><br>
+<a href="/home">Home</a><br>
 
 </body>
 </html>
