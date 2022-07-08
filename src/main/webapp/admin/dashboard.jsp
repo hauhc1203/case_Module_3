@@ -58,14 +58,15 @@
 
 <table >
     <tr>
-    <tr><th colspan="5" >Danh sách Loai SPh</th></tr>
+    <tr><th colspan="5" >Danh sách loại sản phẩm</th></tr>
+    <p>
+        <a href="/product">Trở lại Danh sách sản phẩm</a>
+    </p>
     <tr>
+
         <td  colspan="5" style="text-align: left " >
             <div class="hau">
-                <a href="/student?action=create">
-                    <button type="button" class="btn btn-primary">Create</button>
-                </a>
-                <form action="/student?action=search" method="post" style="margin: 0">
+                <form action="/product?action=search" method="post" style="margin: 0">
                     <input type="search" placeholder="nhập vào tên" name="key" class="search" required>
                     <button type="submit" class="btn btn-info">Search</button>
                 </form>
@@ -92,8 +93,11 @@
         </tr>
     </c:forEach>
 </table>
+<a href="/product?action=insert" methods="post">
+    <button type="button" class="btn btn-primary">Thêm loại sản phẩm</button>
+</a>
 
-<table >
+<table>
     <tr>
     <tr><th colspan="9" >Danh sách SP</th></tr>
     <tr>
