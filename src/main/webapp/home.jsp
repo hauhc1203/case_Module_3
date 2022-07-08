@@ -1,3 +1,4 @@
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -17,6 +18,7 @@
     <link href="css/styles.css" rel="stylesheet" />
 
 
+
 </head>
 <body>
 <!-- Navigation-->
@@ -26,30 +28,29 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/home">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/product?role=user">All Products</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                        <li><a class="dropdown-item" href="/home">Top sales</a></li>
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" style="width: 200px;display: flex ;justify-content: space-between">
-                <button class="btn btn-outline-dark" type="submit">
-                    <i class="bi-cart-fill me-1"></i>
-                    Cart
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">${sessionScope.soSp}</span>
-                </button>
+            <div class="d-flex" style="width: 200px;display: flex ;justify-content: space-between">
+                    <button class="btn btn-outline-dark" type="submit" onclick="displayCart()" >
+                        <i class="bi-cart-fill me-1"></i>
+                        Cart
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">${sessionScope.soSp}</span>
+                    </button>
                 <a href="/login">
                 <button class="btn btn-outline-dark" type="submit">
                    Login
                 </button></a>
 
-            </form>
+            </div>
         </div>
     </div>
 </nav>
@@ -66,7 +67,7 @@
 
 <div class=" px-4 px-lg-5 mt-5"  >
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a class="navbar-brand" href="/home">Top Sale</a>
+        <a class="navbar-brand" href="/home">Top Sales</a>
         <a class="navbar-brand" href="/home?action=showall">All Product</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -105,7 +106,7 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/add-to-cart?action=add&id=${p.idProduct}">Add to cart</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="/cart?action=add&id=${p.idProduct}">Add to cart</a></div>
                     </div>
                 </div>
             </div>
@@ -114,6 +115,62 @@
     </div>
 
 </div>
+<%--Cart--%>
+
+<div style="  position: fixed ;top:6%;left: 60% ; font-size: 23px;
+    width: 600px ;
+    height:  auto;
+    display: none;
+    background-color: wheat;
+    border-radius: 15px;
+
+" id="cart1" >
+    <div class="title" style="text-align:center ; color: #6a1a21; font-size: 34px"><big >  Chi tiết Giỏ hàng </big></div>
+
+    <div class="pricing">
+        <div class="row" style="color: #146c43">
+            <div class="col-4">
+                <span class="name" >Tên Sản Phẩm</span>
+            </div>
+            <div class="col-4" style="text-align: center">
+                <span class="" >Số Lượng</span>
+            </div>
+            <div class="col-4">
+                <span class="price">Thành tiền</span>
+            </div>
+            <c:forEach var="entry" items="${sessionScope.cart.getDetail()}">
+                <div class="col-4">
+                    <span class="name">${entry.getKey().getNameProduct()}</span>
+                </div>
+                <div class="col-4" style="text-align: center">
+                    <span class="">${entry.getValue()}</span>
+                </div>
+                <div class="col-4">
+                    <span class="price">${entry.getKey().getPrice()*entry.getValue()} VNĐ</span>
+                </div>
+            </c:forEach>
+
+        </div>
+
+    </div>
+    <div class="total">
+        <div class="row" style="color: red">
+            <div class="col-8" ><big>Tổng:</big>  </div>
+            <div class="col-4"><big>${sessionScope.cart.getTotalValue()} VNĐ</big></div>
+        </div>
+    </div>
+    <div class="total">
+        <div class="row" >
+            <div class="col-12"style="display: flex; justify-content: center">
+                <a href=""><button style="width: 200px;height: 36px;font-size: 24px;display: flex;justify-content: center" class="btn btn-primary">Mua</button></a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
 <!-- Footer-->
 <footer class="py-5 bg-dark">
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
@@ -123,4 +180,20 @@
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 </body>
+
+<script>
+    let link=document.getElementById("cart1")
+    let c=0;
+    function displayCart(){
+        if (c==0){
+            link.style.display='block';
+            c++
+        }else {
+            link.style.display='none';
+            c--;
+        }
+    }
+
+
+</script>
 </html>

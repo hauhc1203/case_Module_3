@@ -49,7 +49,7 @@ public class HomeServlet extends HttpServlet {
                 products=productDAO.selectByCategory(idCategory);
                 break;
             default:
-                products=productDAO.selectTop3();
+                products=productDAO.selectTop6();
 
 
         }

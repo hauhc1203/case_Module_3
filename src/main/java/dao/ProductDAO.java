@@ -22,7 +22,7 @@ public class ProductDAO implements IDAO<Product> {
 
     private  static  final  String SELECT_BY_CATEGORY="select * from sanPham where idCategory=?;";
 
-    private  static  final  String SELECT_TOP_3="select * from sanPham  order by quantity_sold DESC limit 3;";
+    private  static  final  String SELECT_TOP_6="select * from sanPham  order by quantity_sold DESC limit 6;";
     CategoryDAO categoryDAO=new CategoryDAO();
 
     @Override
@@ -83,9 +83,9 @@ public class ProductDAO implements IDAO<Product> {
 
 
 
-    public ArrayList<Product> selectTop3() {
+    public ArrayList<Product> selectTop6() {
         ArrayList<Product> products =new ArrayList<>();
-        try (Connection connection= ConnectDB.getConnect(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_TOP_3)){
+        try (Connection connection= ConnectDB.getConnect(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_TOP_6)){
 
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
@@ -103,8 +103,6 @@ public class ProductDAO implements IDAO<Product> {
         }
         return products;
     }
-
-
     public ArrayList<Product> selectByCategory(int idCategory) {
         ArrayList<Product> products =new ArrayList<>();
         try (Connection connection= ConnectDB.getConnect(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_CATEGORY)){
