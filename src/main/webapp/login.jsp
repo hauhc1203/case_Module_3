@@ -60,7 +60,7 @@
                             </div>
                         </form>
                         <p class="text-center">Not a member? >
-                            <a href="Sign%20_Up.jsp">Sign Up</a></p>
+                            <a href="register.jsp">Sign Up</a></p>
                     </div>
                 </div>
             </div>

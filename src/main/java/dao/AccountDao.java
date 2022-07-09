@@ -75,5 +75,19 @@ public class AccountDao implements IDAO<Account>{
     public boolean edit(Account account) {
         return false;
     }
-
+    public boolean create(String fullName, String phoneNumber, String passWord, String role ) {
+        String sql = "INSERT into taiKhoan( fullName ,phoneNumber , passWord ,role )  value (?,?,?,?)";
+        ConnectDB Connect_MySQL = null;
+        try (Connection connection = Connect_MySQL.getConnect()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, fullName);
+            preparedStatement.setString(2, phoneNumber);
+            preparedStatement.setString(3, passWord);
+            preparedStatement.setString(4, role);
+            return preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
 }

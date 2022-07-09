@@ -25,7 +25,7 @@ import java.io.IOException;
         }
         switch (action){
             case "logout":
-                Login.account=null;
+                Login.account = null;
                 dispatcher = req.getRequestDispatcher("/home");
                 dispatcher.forward(req, resp);
                 break;
