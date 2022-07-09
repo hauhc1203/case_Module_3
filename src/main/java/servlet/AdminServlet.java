@@ -53,10 +53,10 @@ public class AdminServlet extends HttpServlet {
                 break;
             case "edit":
                 id = Integer.parseInt(req.getParameter("idProduct"));
-                Product product = productDAO.selectAll().get(id);
+                Product productss = productDAO.selectAll().get(id);
                 categories = categoryDAO.selectAll();
                 session.setAttribute("categories", categories);
-                session.setAttribute("products", product);
+                session.setAttribute("products", productss);
                 requestDispatcher = req.getRequestDispatcher("/editproduct.jsp");
                 requestDispatcher.forward(req, resp);
                 break;

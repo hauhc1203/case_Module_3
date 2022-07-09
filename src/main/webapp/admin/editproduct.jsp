@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <head>
     <title>Thêm sản phẩm</title>
     <meta charset="UTF-8">
@@ -42,7 +43,7 @@
     </style>
 </head>
 <body>
-<form action="/admin?action=edit&id=${product.idProduct}" method="post" >
+<form action="/admin?action=edit&id=${product.idProduct}" method="get" >
     <h3>Sửa Thông Tin Sản Phẩm </h3>
     <br>
 
@@ -53,7 +54,7 @@
         <%--            </tr>--%>
         <tr>
             <td>Loại SP</td>
-            <td><select  name="category" id="category">
+            <td><select  name="category" id="category" required value="${productss.category}>
                 <c:forEach var="c" items="${sessionScope.categories}">
                     <option value="${c.idCategory}">${c.nameCategory}</option>
                 </c:forEach>
@@ -61,24 +62,24 @@
         </tr>
         <tr>
             <td>Tên SP</td>
-            <td><input type="text" name="nameProduct" id="nameProduct"></td>
+            <td><input type="text" name="nameProduct" id="nameProduct" type="text" required autofocus value="${productss.idProduct}"></td>
         </tr>
         <tr>
             <td>Ảnh</td>
-            <td><input type="text" name="imgURL" id="imgURL"></td>
+            <td><input type="text" name="imgURL" id="imgURL" required value="${productss.imgURL}"></td>
         </tr>
         <tr>
             <td>Giá</td>
-            <td><input type="text" name="price" id="price"></td>
+            <td><input type="text" name="price" id="price" required value="${productss.price}></td>
         </tr>
         <tr>
             <td>Số lượng</td>
-            <td><input type="number" name="quantity" id="quantity"></td>
+            <td><input type="number" name="quantity" id="quantity" required value="${productss.quantity}></td>
         </tr>
         <tr>
         <tr>
             <td>Đã bán</td>
-            <td><input type="number" name="quantity_sold" id="quantity_sold"></td>
+            <td><input type="number" name="quantity_sold" id="quantity_sold" required value="${productss.quantity_sold}></td>
         <tr>
             <br><br>
             <button type="submit" class="btn btn-primary">Sửa</button>
