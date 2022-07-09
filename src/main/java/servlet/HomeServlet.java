@@ -3,6 +3,7 @@ package servlet;
 import dao.CategoryDAO;
 import dao.ProductDAO;
 import model.Category;
+import model.Login;
 import model.Product;
 
 import javax.servlet.RequestDispatcher;
@@ -35,6 +36,7 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session =req.getSession();
 
+        session.setAttribute("account", Login.account);
         String action=req.getParameter("action");
 
         if (action==null){

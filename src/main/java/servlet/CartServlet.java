@@ -36,16 +36,18 @@ public class CartServlet extends  HomeServlet{
         switch (action){
             case "add":
                 addToCart(req,resp);
-                session.setAttribute("soSp",checkProductCart());
+
 
                 break;
-            case "show":
+            case "remove":
+                removeP(req,resp);
 
 
                 break;
 
 
         }
+        session.setAttribute("soSp",checkProductCart());
         session.setAttribute("cart",cart);
         resp.sendRedirect("/home.jsp");
     }
@@ -86,7 +88,17 @@ public class CartServlet extends  HomeServlet{
         }
         return null;
     }
+    public void removeP(HttpServletRequest req, HttpServletResponse resp){
+        Map<Product,Integer> tmp=new HashMap<>();
+        int idP= Integer.parseInt(req.getParameter("id"));
+        for (Map.Entry<Product, Integer> entry : cart.getDetail().entrySet()) {
+            if (entry.getKey().getIdProduct()!=idP){
+                tmp.put(entry.getKey(),entry.getValue());
+            }
+        }
+        cart.setDetail(tmp);
 
+    }
 
 
 }
