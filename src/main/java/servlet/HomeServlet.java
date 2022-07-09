@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(urlPatterns = "/home")
 public class HomeServlet extends HttpServlet {
@@ -40,6 +42,7 @@ public class HomeServlet extends HttpServlet {
            String [] ten=Login.account.getFullName().split(" ");
            lastname=ten[ten.length-1];
 
+
        }else {
            lastname=null;
        }
@@ -61,8 +64,8 @@ public class HomeServlet extends HttpServlet {
 
 
         }
-        req.setAttribute("account", Login.account);
-        req.setAttribute("lastname",lastname);
+        session.setAttribute("account", Login.account);
+        session.setAttribute("lastname",lastname);
         session.setAttribute("category",categories);
         session.setAttribute("products",products);
         resp.sendRedirect("/home.jsp");

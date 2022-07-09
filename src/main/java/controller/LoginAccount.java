@@ -47,7 +47,7 @@ import java.io.IOException;
                session.setAttribute("account",account);
 
                 if (account.getRole().equals("user")) {
-                    resp.sendRedirect("/home");
+                    resp.sendRedirect("/cart");
                 } else {
                     resp.sendRedirect("/admin");
                 }

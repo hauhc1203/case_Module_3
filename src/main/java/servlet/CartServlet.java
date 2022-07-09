@@ -2,6 +2,7 @@ package servlet;
 
 import dao.ProductDAO;
 import model.Cart;
+import model.Login;
 import model.Product;
 
 import javax.servlet.ServletException;
@@ -15,7 +16,7 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = "/cart")
 public class CartServlet extends  HomeServlet{
-    public static Cart cart;
+    public static Cart cart=null;
     ProductDAO productDAO;
 
     @Override
@@ -28,10 +29,25 @@ public class CartServlet extends  HomeServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session=req.getSession();
         String action =req.getParameter("action");
+
+        if (action==null){
+            action="";
+        }
         if (cart==null){
             Map<Product,Integer> details=new HashMap<>();
-            cart=new Cart(null,details,0);
+            cart=new Cart(Login.account,details,0);
+
+        }else if (Login.account!=null){
+            if (cart.getAccount()==null){
+                cart.setAccount(Login.account);
+            }else if (cart.getAccount().getIdAccount()!=Login.account.getIdAccount()){
+                    Map<Product, Integer> details1 = new HashMap<>();
+                    cart.setDetail(details1);
+                }
+
+
         }
+
 
         switch (action){
             case "add":
@@ -49,7 +65,7 @@ public class CartServlet extends  HomeServlet{
         }
         session.setAttribute("soSp",checkProductCart());
         session.setAttribute("cart",cart);
-        resp.sendRedirect("/home.jsp");
+        resp.sendRedirect("/home");
     }
 
 

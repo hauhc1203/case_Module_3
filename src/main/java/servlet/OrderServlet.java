@@ -3,6 +3,7 @@ package servlet;
 import com.mysql.cj.xdevapi.Session;
 import dao.OrderDAO;
 import dao.OrderDetailDAO;
+import model.Login;
 import model.Order;
 
 import javax.servlet.ServletException;
@@ -50,6 +51,9 @@ public class OrderServlet extends HttpServlet {
             case "showDetail":
                 orderDetail(req,resp ,session);
                 break;
+            case "create":
+                createOrder(req,resp,session);
+                break;
             default:
                 resp.sendRedirect("index.jsp");
 
@@ -85,6 +89,13 @@ public class OrderServlet extends HttpServlet {
         orderDetailDAO.findByOrder(order);
         session.setAttribute("order",order);
         resp.sendRedirect("/orderDetail.jsp");
+
+
+    }
+    public void createOrder(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws IOException {
+
+            resp.sendRedirect("/createOrder.jsp");
+
 
 
     }

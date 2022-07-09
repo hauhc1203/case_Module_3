@@ -41,15 +41,17 @@
                 </li>
             </ul>
             <div class="d-flex" style="width: auto ;display: flex ;justify-content: space-between">
-                    <button class="btn btn-outline-dark" type="submit" onclick="displayCart()" >
-                        <i class="bi-cart-fill me-1"></i>
-                        Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">${sessionScope.soSp}</span>
-                    </button>
+
 
                 <c:choose>
-                    <c:when test="${account!=null}">
-                        <div style="width: auto;display: flex;" id="logout"> <h4>Xin chao, ${lastname}</h4>
+                    <c:when test="${sessionScope.account!=null}">
+                        <a href="/orders?action=showByAcc&idAcc=${sessionScope.account.getIdAccount()}"><button class="btn btn-outline-dark">Your Orders</button></a>
+                        <button class="btn btn-outline-dark" type="submit" onclick="displayCart()" >
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">${sessionScope.soSp}</span>
+                        </button>
+                        <div style="width: auto;display: flex;" id="logout"> <h4>Xin chao, ${sessionScope.lastname}</h4>
 
                             <a href="/login?action=logout">
                                 <button class="btn btn-outline-dark" type="submit">
@@ -58,6 +60,11 @@
                         </div>
                     </c:when>
                     <c:otherwise>
+                        <button class="btn btn-outline-dark" type="submit" onclick="displayCart()" >
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">${sessionScope.soSp}</span>
+                        </button>
                         <a href="/login" id="login">
                             <button class="btn btn-outline-dark" type="submit">
                                 Login
@@ -134,7 +141,7 @@
     width: 700px ;
     height: auto;
     display: none;
-    background-color: wheat;
+    background-color: green;
     border-radius: 15px;
     overflow:auto;
     max-height: 500px;
@@ -144,7 +151,7 @@
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-12">
-                    <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                    <div class="card card-registration card-registration-2" style="border-radius: 15px">
                         <div class="card-body p-0">
                             <div class="row g-0">
                                 <div class="col-lg-12">
@@ -167,28 +174,33 @@
                                                     <h6 class="text-black mb-0">${entry.getKey().getNameProduct()}</h6>
                                                 </div>
                                                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                                    <button class="btn btn-link px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                        <i class="fa fa-minus" ></i>
-                                                    </button>
+<%--                                                    <button class="btn btn-link px-2"--%>
+<%--                                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">--%>
+<%--                                                        <i class="fa fa-minus" ></i>--%>
+<%--                                                    </button>--%>
 
-                                                    <input class="form1" style="width: 45px" min="0" name="quantity" value="${entry.getValue()}" type="number"
-                                                           class="form-control form-control-sm" />
+                                                    <input id="${entry.getKey().getIdProduct()}" style="width: 60px" min="0" name="quantity" value="${entry.getValue()}" type="number"
+                                                           class="form-control form-control-sm"  />
 
-                                                    <button class="btn btn-link px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                        <i class="fa fa-plus"></i>
-                                                    </button>
+<%--                                                    <button class="btn btn-link px-2"--%>
+<%--                                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">--%>
+<%--                                                        <i class="fa fa-plus"></i>--%>
+<%--                                                    </button>--%>
                                                 </div>
                                                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                                     <h6 class="mb-0">${entry.getKey().getPrice()*entry.getValue()} VNĐ</h6>
                                                 </div>
                                                 <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                    <a href="/cart?action=remove&id=${entry.getKey().getIdProduct()}" class="text-muted"><i class="fa fa-times"></i></a>
+                                                    <a   href="/cart?action=remove&id=${entry.getKey().getIdProduct()}" class="text-muted"><i class="fa fa-times"></i></a>
                                                 </div>
                                             </div>
                                             <hr class="my-4">
                                         </c:forEach>
+
+
+                                        <div class="row mb-4 d-flex  align-items-center" style="display: flex;justify-content: center;}">
+                                            <a href="/cart?action=updateQuantity" style="width: 15%" id="haha"><button class="btn btn-info">Order</button></a>
+                                        </div>
                                 </div>
                                 </div>
                             </div>
@@ -225,6 +237,31 @@
             c--;
         }
     }
+
+
+
+
+    let link1=document.getElementById("haha")
+    let quantity = document.querySelectorAll('.form-control-sm');
+    link1.addEventListener('click',function (evt){
+            evt.preventDefault()
+
+            let c=0;
+            for (let i = 0; i < quantity.length; i++) {
+                c+= quantity[i].getAttribute('value')
+            }
+            if (c==0){
+                alert("Chưa có gì để mua !!!")
+            }else
+                window.location.href=link1.getAttribute("href")
+    })
+
+    for (let i = 0; i < quantity.length; i++){
+            quantity[i].addEventListener('change',function (evt){
+                quantity[i].setAttribute("value",quantity[i].value)
+            })
+    }
+
 
 
 
