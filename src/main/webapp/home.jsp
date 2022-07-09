@@ -40,26 +40,32 @@
                     </ul>
                 </li>
             </ul>
-            <div class="d-flex" style="width: 200px;display: flex ;justify-content: space-between">
+            <div class="d-flex" style="width: auto ;display: flex ;justify-content: space-between">
                     <button class="btn btn-outline-dark" type="submit" onclick="displayCart()" >
                         <i class="bi-cart-fill me-1"></i>
                         Cart
                         <span class="badge bg-dark text-white ms-1 rounded-pill">${sessionScope.soSp}</span>
                     </button>
 
-                <c:if test=" ${sessionScope.account==null}"  >
-                    <a href="/login">
-                        <button class="btn btn-outline-dark" type="submit">
-                            Login
-                        </button></a>
-                </c:if>
-                <c:if test="1"  >
-                    <div> <h4>Xin chao, ${sessionScope.acc.getFullName()}</h4></div>
-                    <a href="/login?action=logout">
-                        <button class="btn btn-outline-dark" type="submit">
-                            Logout
-                        </button></a>
-                </c:if>
+                <c:choose>
+                    <c:when test="${account!=null}">
+                        <div style="width: auto;display: flex;" id="logout"> <h4>Xin chao, ${lastname}</h4>
+
+                            <a href="/login?action=logout">
+                                <button class="btn btn-outline-dark" type="submit">
+                                    Logout
+                                </button></a>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="/login" id="login">
+                            <button class="btn btn-outline-dark" type="submit">
+                                Login
+                            </button></a>
+                    </c:otherwise>
+                </c:choose>
+
+
 
             </div>
         </div>
@@ -205,7 +211,9 @@
 </body>
 
 <script>
+
     let link=document.getElementById("cart1")
+
     let c=0;
     function displayCart(){
 

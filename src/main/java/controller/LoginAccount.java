@@ -18,9 +18,21 @@ import java.io.IOException;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/login.jsp");
-        dispatcher.forward(req, resp);
+        RequestDispatcher dispatcher;
+        String action=req.getParameter("action");
+        if (action==null){
+            action="";
+        }
+        switch (action){
+            case "logout":
+                Login.account=null;
+                dispatcher = req.getRequestDispatcher("/home");
+                dispatcher.forward(req, resp);
+                break;
+            default:
+                dispatcher = req.getRequestDispatcher("/login.jsp");
+                dispatcher.forward(req, resp);
+        }
     }
 
     @Override

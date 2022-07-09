@@ -35,8 +35,14 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session =req.getSession();
+        String lastname;
+       if (Login.account!=null){
+           String [] ten=Login.account.getFullName().split(" ");
+           lastname=ten[ten.length-1];
 
-        session.setAttribute("account", Login.account);
+       }else {
+           lastname=null;
+       }
         String action=req.getParameter("action");
 
         if (action==null){
@@ -55,6 +61,8 @@ public class HomeServlet extends HttpServlet {
 
 
         }
+        req.setAttribute("account", Login.account);
+        req.setAttribute("lastname",lastname);
         session.setAttribute("category",categories);
         session.setAttribute("products",products);
         resp.sendRedirect("/home.jsp");
