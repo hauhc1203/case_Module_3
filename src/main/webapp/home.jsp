@@ -96,15 +96,23 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-                <c:forEach var="c" items="${sessionScope.category}">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home?action=showByCategory&idCategory=${c.getIdCategory()}">${c.getNameCategory()}</a>
-                    </li>
-                </c:forEach>
-            </ul>
-        </div>
+        <c:choose>
+            <c:when test="${account!=null}">
+                <div style="width: auto;display: flex;" id="logout"> <h4>Xin chao, ${lastname}</h4>
+
+                    <a href="/login?action=logout">
+                        <button class="btn btn-outline-dark" type="submit">
+                            Logout
+                        </button></a>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <a href="/login" id="login">
+                    <button class="btn btn-outline-dark" type="submit">
+                        Login
+                    </button></a>
+            </c:otherwise>
+        </c:choose>
     </nav>
 </div>
 <div class="container px-4 px-lg-5 mt-5"  >
