@@ -28,8 +28,7 @@ public class OrderDAO implements IDAO<Order> {
     private  static  final String UPDATE_ORDER="UPDATE donHang SET nameCategory=?;";
 
     CategoryDAO categoryDAO=new CategoryDAO();
-    AccountDAO accountDAO =new AccountDAO();
-
+    AccountDao accountDao=new AccountDao();
 
     @Override
     //hien thi don hang
@@ -45,7 +44,7 @@ public class OrderDAO implements IDAO<Order> {
                 String statusDelivery = rs.getString("statusDelivery");
                 String address = rs.getString("address");
                 double totalValue =rs.getDouble("totalValue");
-                orders.add(new Order(id,accountDAO.findCByID(idAcc),orderDate,detail,statusDelivery,address,totalValue));
+                orders.add(new Order(id,accountDao.findCByID(idAcc),orderDate,detail,statusDelivery,address,totalValue));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -67,7 +66,7 @@ public class OrderDAO implements IDAO<Order> {
                 String statusDelivery = rs.getString("statusDelivery");
                 String address = rs.getString("address");
                 double totalValue =rs.getDouble("totalValue");
-                orders.add(new Order(id,accountDAO.findCByID(idAcc),orderDate,detail,statusDelivery,address,totalValue));
+                orders.add(new Order(id,accountDao.findCByID(idAcc),orderDate,detail,statusDelivery,address,totalValue));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -102,7 +101,7 @@ public class OrderDAO implements IDAO<Order> {
             String address = resultSet.getString("address");
             double totalValue =resultSet.getDouble("totalValue");
 
-            return new Order(id,accountDAO.findCByID(idAcc),orderDate,detail,statusDelivery,address,totalValue);
+            return new Order(id,accountDao.findCByID(idAcc),orderDate,detail,statusDelivery,address,totalValue);
         } catch (SQLException e) {
 
         }
