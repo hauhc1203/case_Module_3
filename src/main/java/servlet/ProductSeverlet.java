@@ -22,8 +22,8 @@ public class ProductSeverlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-String action = req.getParameter("action");
-Product product= new Product();
+        String action = req.getParameter("action");
+        Product product= new Product();
         if (action == null) {
             action = "";
         }

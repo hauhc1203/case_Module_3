@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import java.io.IOException;
 
 
-@WebFilter(urlPatterns = {"/admin"})
+@WebFilter(urlPatterns = {""})
 
 public class AdminFilter  implements Filter {
     @Override
@@ -25,6 +25,7 @@ public class AdminFilter  implements Filter {
             if (Login.account.getRole().equals("admin")){
                 chain.doFilter(request, response);
             }else {
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/404.html");
                 dispatcher.forward(request, response);
             }

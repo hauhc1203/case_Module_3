@@ -132,7 +132,7 @@
             <td>${p.price}</td>
             <td>${p.quantity}</td>
             <td>${p.quantity_sold}</td>
-            <td><a href="/admin?action=edit=${p.idProduct}"><button type="button" class="btn btn-warning">Edit</button>
+            <td><a href="/admin?action=edit&id=${p.idProduct}"><button type="button" class="btn btn-warning">Edit</button>
             </a></td>
             <td><a  href="/admin?action=delete&id=${p.idProduct}"  class="delete"  ><button type="button" class="btn btn-danger" >Delete</button>
             </a></td>
