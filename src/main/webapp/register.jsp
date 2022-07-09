@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="fonts/linearicons/style.css">
 		
 		<!-- STYLE CSS -->
-		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/signup.css">
 	</head>
 
 	<body>

@@ -29,6 +29,9 @@ import java.io.IOException;
                 dispatcher = req.getRequestDispatcher("/home");
                 dispatcher.forward(req, resp);
                 break;
+            case "signup":
+                resp.sendRedirect("/register.jsp");
+                break;
             default:
                 dispatcher = req.getRequestDispatcher("/login.jsp");
                 dispatcher.forward(req, resp);

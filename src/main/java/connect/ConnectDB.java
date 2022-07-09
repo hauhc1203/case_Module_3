@@ -9,7 +9,7 @@ public class ConnectDB {
     public static Connection getConnect(){
         String jdbcURL = "jdbc:mysql://localhost:3306/webBanHang?useSSL=false";
         String jdbcUsername = "root";
-        String jdbcPassword = "Huy31899";
+        String jdbcPassword = "hauhc1203";
         Connection connection = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
