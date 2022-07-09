@@ -1,6 +1,6 @@
 package controller;
 
-import dao.AccountDao;
+import dao.AccountDAO;
 import model.Account;
 import model.Login;
 
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 @WebServlet(urlPatterns = "/login")
     public class LoginAccount extends HttpServlet {
-        AccountDao accountDao = new AccountDao();
+        AccountDAO accountDao = new AccountDAO();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

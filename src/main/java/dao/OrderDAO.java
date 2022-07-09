@@ -28,7 +28,7 @@ public class OrderDAO implements IDAO<Order> {
     private  static  final String UPDATE_ORDER="UPDATE donHang SET nameCategory=?;";
 
     CategoryDAO categoryDAO=new CategoryDAO();
-    AccountDao accountDao=new AccountDao();
+    AccountDAO accountDao=new AccountDAO();
 
     @Override
     //hien thi don hang

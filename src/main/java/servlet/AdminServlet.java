@@ -68,6 +68,19 @@ public class AdminServlet extends HttpServlet {
                 requestDispatcher = req.getRequestDispatcher("/admin/dashboard.jsp");
                 requestDispatcher.forward(req, resp);
                 break;
+            case "createc":
+                requestDispatcher = req.getRequestDispatcher("/create" + "category.jsp");
+                requestDispatcher.forward(req, resp);
+                break;
+            case "editc":
+                id = Integer.parseInt(req.getParameter("idCategory"));
+                Category category = categoryDAO.selectAll().get(id);
+                categories = categoryDAO.selectAll();
+                session.setAttribute("categories", categories);
+                session.setAttribute("products", products);
+                requestDispatcher = req.getRequestDispatcher("/edit"+"category.jsp");
+                requestDispatcher.forward(req, resp);
+                break;
             default:
                 products = productDAO.selectAll();
                 requestDispatcher = req.getRequestDispatcher("/admin/dashboard.jsp");
@@ -102,6 +115,32 @@ public class AdminServlet extends HttpServlet {
                 productDAO.insert(product);
                 resp.sendRedirect("/admin");
                 break;
+
+//            case "edit":
+//                id = Integer.parseInt(req.getParameter("idProduct"));
+//                Product product = productDAO.selectAll().get(id);
+//                categories = categoryDAO.selectAll();
+//                session.setAttribute("categories", categories);
+//                session.setAttribute("products", product);
+//                requestDispatcher = req.getRequestDispatcher("/editproduct.jsp");
+//                requestDispatcher.forward(req, resp);
+//                break;
+//            case "delete":
+//                id = Integer.parseInt(req.getParameter("idProduct"));
+//                productDAO.deleteByID(id);
+//                products = productDAO.selectAll();
+//                requestDispatcher = req.getRequestDispatcher("/admin/dashboard.jsp");
+//                requestDispatcher.forward(req, resp);
+//                break;
+            case "createc":
+                idCategory = CategoryDAO.selectAll().size() + 1;
+                String nameCategory = req.getParameter("nameCategory");
+                int productQuantity = 0;
+                Category categories = new Category(idCategory, nameCategory, productQuantity);
+                CategoryDAO.insert(categories);
+                resp.sendRedirect("/admin");
+                break;
+
         }
     }
 }

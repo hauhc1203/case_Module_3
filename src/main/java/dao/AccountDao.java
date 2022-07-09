@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class AccountDao implements IDAO<Account>{
+public class AccountDAO implements IDAO<Account>{
     String sql = "select * from taiKhoan where phoneNumber = ? and passWord =?";
 
 
