@@ -48,15 +48,16 @@ public class AdminServlet extends HttpServlet {
         }
         switch (action) {
             case "create":
-                requestDispatcher = req.getRequestDispatcher("/createproduct.jsp");
+                requestDispatcher = req.getRequestDispatcher("/create" +
+                        "product.jsp");
                 requestDispatcher.forward(req, resp);
                 break;
             case "edit":
                 id = Integer.parseInt(req.getParameter("idProduct"));
-                Product productss = productDAO.selectAll().get(id);
+                Product product = productDAO.selectAll().get(id);
                 categories = categoryDAO.selectAll();
                 session.setAttribute("categories", categories);
-                session.setAttribute("products", productss);
+                session.setAttribute("products", product);
                 requestDispatcher = req.getRequestDispatcher("/editproduct.jsp");
                 requestDispatcher.forward(req, resp);
                 break;

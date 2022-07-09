@@ -66,7 +66,7 @@
 
         <td  colspan="5" style="text-align: left " >
             <div class="hau">
-                <form action="/admin/dashbroad.jsp?action=search" method="post" style="margin: 0">
+                <form action="/admin?action=search" method="post" style="margin: 0">
                     <input type="search" placeholder="nhập vào tên" name="key" class="search" required>
                     <button type="submit" class="btn btn-info">Search</button>
                 </form>
@@ -86,14 +86,14 @@
             <td>${categorie.nameCategory}</td>
             <td>${categorie.productQuantity}</td>
 
-            <td><a href="/admin/dashbroad.jsp?action=edit&id=${categorie.idCategory}"><button type="button" class="btn btn-warning">Edit</button>
+            <td><a href="/admin?action=edit&id=${categorie.idCategory}"><button type="button" class="btn btn-warning">Edit</button>
             </a></td>
-            <td><a  href="/admin/dashbroad.jsp?action=delete&id=${categorie.idCategory}"  class="delete"  ><button type="button" class="btn btn-danger" >Delete</button>
+            <td><a  href="/admin?action=delete&id=${categorie.idCategory}"  class="delete"  ><button type="button" class="btn btn-danger" >Delete</button>
             </a></td>
         </tr>
     </c:forEach>
 </table>
-<a href="/admin/dashbroad.jsp?action=insert" methods="post">
+<a href="/admin?action=insert" methods="post">
     <button type="button" class="btn btn-primary">Thêm loại sản phẩm</button>
 </a>
 
@@ -103,10 +103,10 @@
     <tr>
         <td  colspan="9" style="text-align: left " >
             <div class="hau">
-                <a href="/admin/createproduct.jsp?action=create">
+                <a href="/admin?action=create">
                     <button type="button" class="btn btn-primary">Create</button>
                 </a>
-                <form action="/admin/dashbroad.jsp?action=search" method="post" style="margin: 0">
+                <form action="/admin?action=search" method="post" style="margin: 0">
                     <input type="search" placeholder="nhập vào tên" name="key"  class="search">
                     <button type="submit" class="btn btn-info">Search</button>
                 </form>
@@ -132,9 +132,9 @@
             <td>${p.price}</td>
             <td>${p.quantity}</td>
             <td>${p.quantity_sold}</td>
-            <td><a href="/admin/dashbroad.jsp?action=edit=${p.idProduct}"><button type="button" class="btn btn-warning">Edit</button>
+            <td><a href="/admin?action=edit&id=${p.idProduct}"><button type="button" class="btn btn-warning">Edit</button>
             </a></td>
-            <td><a  href="/admin/dashbroad.jsp?action=delete&id=${p.idProduct}"  class="delete"  ><button type="button" class="btn btn-danger" >Delete</button>
+            <td><a  href="/admin?action=delete&id=${p.idProduct}"  class="delete"  ><button type="button" class="btn btn-danger" >Delete</button>
             </a></td>
         </tr>
     </c:forEach>

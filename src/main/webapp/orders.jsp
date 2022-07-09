@@ -11,7 +11,7 @@
 <html>
 <head>
 
-    <title>Dash Board</title>
+    <title>Đơn Hàng Của bạn</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -39,7 +39,7 @@
         }
         .hau{
             display: flex;
-            justify-content: space-between;
+            justify-content: right;
             align-items: center;
             padding: 0 22px;
         }
@@ -56,52 +56,14 @@
     </nav-bar>
 </div>
 
-<table hidden="true">
+
+<table >
     <tr>
-    <tr><th colspan="5" >Danh sách Loai SPh</th></tr>
+    <tr><th colspan="8" >Danh sách đơn hàng</th></tr>
     <tr>
-        <td  colspan="5" style="text-align: left " >
+        <td  colspan="8" style="text-align: left " >
             <div class="hau">
-                <a href="/student?action=create">
-                    <button type="button" class="btn btn-primary">Create</button>
-                </a>
-                <form action="/student?action=search" method="post" style="margin: 0">
-                    <input type="search" placeholder="nhập vào tên" name="key" class="search" required>
-                    <button type="submit" class="btn btn-info">Search</button>
-                </form>
-            </div>
-        </td>
 
-    </tr>
-    <th>MÃ Lsp</th>
-    <th>Tên</th>
-    <th>So SP</th>
-
-    <th colspan="2">Hành động</th>
-    </tr>
-    <c:forEach var="categorie" items="${sessionScope.categories}">
-        <tr>
-            <td>${categorie.idCategory}</td>
-            <td>${categorie.nameCategory}</td>
-            <td>${categorie.productQuantity}</td>
-
-            <td><a href="/student?action=edit&id=${categorie.idCategory}"><button type="button" class="btn btn-warning">Edit</button>
-            </a></td>
-            <td><a  href="/student?action=delete&id=${categorie.idCategory}"  class="delete"  ><button type="button" class="btn btn-danger" >Delete</button>
-            </a></td>
-        </tr>
-    </c:forEach>
-</table>
-
-<table hidden="true">
-    <tr>
-    <tr><th colspan="9" >Danh sách SP</th></tr>
-    <tr>
-        <td  colspan="9" style="text-align: left " >
-            <div class="hau">
-                <a href="/student?action=create">
-                    <button type="button" class="btn btn-primary">Create</button>
-                </a>
                 <form action="/student?action=search" method="post" style="margin: 0">
                     <input type="search" placeholder="nhập vào tên" name="key"  class="search">
                     <button type="submit" class="btn btn-info">Search</button>
@@ -110,31 +72,48 @@
         </td>
 
     </tr>
-    <th>MÃ SP</th>
-    <th>Loại SP</th>
-    <th>Tên SP</th>
-    <th>Ảnh SP</th>
-    <th>Giá</th>
-    <th>Số Lượng SP</th>
-    <th>Đã bán</th>
+    <th>Mã đơn hàng</th>
+    <th>Người đặt</th>
+    <th>Ngày đặt</th>
+    <th>Địa chỉ</th>
+
+    <th>Trạng thái </th>
+    <th>Tổng tiền</th>
+
     <th colspan="2">Hành động</th>
     </tr>
-    <c:forEach var="p" items="${sessionScope.products}">
+    <c:forEach var="order" items="${sessionScope.orders}">
         <tr>
-            <td>${p.idProduct}</td>
-            <td>${p.category.getNameCategory()}</td>
-            <td>${p.nameProduct}</td>
-            <td><img src="${p.imgURL}" alt="">   </td>
-            <td>${p.price}</td>
-            <td>${p.quantity}</td>
-            <td>${p.quantity_sold}</td>
-            <td><a href="/student?action=edit&id=${p.idProduct}"><button type="button" class="btn btn-warning">Edit</button>
+            <td>${order.idOrder}</td>
+            <td>${order.account.getFullName()}</td>
+            <td>${order.orDate}</td>
+
+            <td>${order.address}</td>
+            <td>${order.statusDelivery}</td>
+            <td>${order.totalValue}</td>
+            <td><a href="/orders?action=showDetail&idOrder=${order.idOrder}"><button type="button" class="btn btn-warning">Chi tiết</button>
             </a></td>
-            <td><a  href="/student?action=delete&id=${p.idProduct}"  class="delete"  ><button type="button" class="btn btn-danger" >Delete</button>
+            <td><a  content="${order.statusDelivery}" class="cancel"  ><button type="button" class="btn btn-danger" >Hủy</button>
             </a></td>
         </tr>
+<%--        href="/orders?action=cancel&id=${order.idOrder}"--%>
     </c:forEach>
 </table>
 </body>
-</body>
+<script>
+    let cancelLinks = document.querySelectorAll('.cancel');
+
+    for (let i = 0; i < cancelLinks.length; i++) {
+        cancelLinks[i].addEventListener('click', function(event) {
+            event.preventDefault();
+            let trangThai=  cancelLinks[i].getAttribute("content")
+
+            if (trangThai!="Đang giao") {
+                window.location.href = this.getAttribute('href');
+            }else {
+                alert("đơn hàng đang được  giao. Không thể Hủy ")
+            }
+        });
+    }
+</script>
 </html>

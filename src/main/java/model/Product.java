@@ -33,6 +33,7 @@ public class Product {
 
 
 
+
     public int getIdProduct() {
         return idProduct;
     }

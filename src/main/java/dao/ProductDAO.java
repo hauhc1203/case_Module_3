@@ -14,13 +14,16 @@ public class
 ProductDAO implements IDAO<Product> {
 
     private static final String INSERT_CATEGORY = "INSERT INTO sanPham (nameCategory) VALUES (?);";
-    private static final String SELECT_ALL = "select * from sanpham;";
+    private static final String SELECT_ALL = "select * from sanPham;";
     private static final String SEARCH_CATEGORY = "select * from sanPham where nameCategory like ? ;";
-    private static final String DELETE_PRODUCT = "delete from sanpham where idProduct = ?;";
-    private static final String SELECT_PRODUCT = "select * from sanpham  where idProduct = ?;";
+    private static final String DELETE_PRODUCT = "delete from sanPham where idProduct = ?;";
+    private static final String SELECT_PRODUCT = "select * from sanPham  where idProduct = ?;";
 
     private static final String UPDATE_CATEGORY = "UPDATE sanPham SET nameCategory=?;";
 
+    private static final String SELECT_TOP6="select * from sanPham  order by quantity_sold DESC limit 6;";
+
+    private static final String SELECT_BY_CATEGORY="select * from sanPham  where idCategory=?;";
     CategoryDAO categoryDAO = new CategoryDAO();
 
     @Override
@@ -57,13 +60,11 @@ ProductDAO implements IDAO<Product> {
             preparedStatement.setDouble(5, product.getPrice());
             preparedStatement.setInt(6, product.getQuantity());
             preparedStatement.setInt(7, product.getQuantity_sold());
-            preparedStatement.executeUpdate();
-            return true;
-
-        } catch (SQLException e) {
-                e.printStackTrace();
+            return preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -71,10 +72,9 @@ ProductDAO implements IDAO<Product> {
         try (Connection connection = ConnectDB.getConnect()) {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PRODUCT);
             preparedStatement.setInt(1, id);
-            preparedStatement.execute();
-            return true;
-
-        } catch (SQLException e) {
+            return preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
             return false;
         }
     }
@@ -118,5 +118,47 @@ ProductDAO implements IDAO<Product> {
             throwables.printStackTrace();
             return false;
         }
+    }
+
+
+    public ArrayList<Product> selectTop6() {
+        ArrayList<Product> products = new ArrayList<>();
+        try (Connection connection = ConnectDB.getConnect();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_TOP6)) {
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int idProduct = rs.getInt("idProduct");
+                int idCategory = rs.getInt("idCategory");
+                String name = rs.getString("nameProduct");
+                String imgURL = rs.getString("imgProduct");
+                double price = rs.getDouble("price");
+                int quantity = rs.getInt("quantity");
+                int quantity_sold = rs.getInt("quantity_sold");
+                products.add(new Product(idProduct, name, categoryDAO.findCByID(idCategory), imgURL, price, quantity, quantity_sold));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return products;
+    }
+    public ArrayList<Product> selectByCategory(int idCategory) {
+        ArrayList<Product> products = new ArrayList<>();
+        try (Connection connection = ConnectDB.getConnect();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_CATEGORY)) {
+            preparedStatement.setInt(1,idCategory);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int idProduct = rs.getInt("idProduct");
+                String name = rs.getString("nameProduct");
+                String imgURL = rs.getString("imgProduct");
+                double price = rs.getDouble("price");
+                int quantity = rs.getInt("quantity");
+                int quantity_sold = rs.getInt("quantity_sold");
+                products.add(new Product(idProduct, name, categoryDAO.findCByID(idCategory), imgURL, price, quantity, quantity_sold));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return products;
     }
 }
