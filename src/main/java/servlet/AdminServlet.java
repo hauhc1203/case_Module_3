@@ -52,16 +52,16 @@ public class AdminServlet extends HttpServlet {
                 requestDispatcher.forward(req, resp);
                 break;
             case "edit":
-                id = Integer.parseInt(req.getParameter("id"));
+                id = Integer.parseInt(req.getParameter("idProduct"));
                 Product product = productDAO.selectAll().get(id);
                 categories = categoryDAO.selectAll();
                 session.setAttribute("categories", categories);
-                session.setAttribute("products", products);
-                requestDispatcher = req.getRequestDispatcher("editproduct.jsp");
+                session.setAttribute("products", product);
+                requestDispatcher = req.getRequestDispatcher("/editproduct.jsp");
                 requestDispatcher.forward(req, resp);
                 break;
             case "delete":
-                id = Integer.parseInt(req.getParameter("id"));
+                id = Integer.parseInt(req.getParameter("idProduct"));
                 productDAO.deleteByID(id);
                 products = productDAO.selectAll();
                 requestDispatcher = req.getRequestDispatcher("/admin/dashboard.jsp");
