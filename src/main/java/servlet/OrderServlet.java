@@ -25,6 +25,7 @@ public class OrderServlet extends HttpServlet {
     OrderDetailDAO orderDetailDAO;
     OrderDAO orderDAO;
     Order order;
+
     @Override
     public void init() throws ServletException {
         orderDAO=new OrderDAO();
@@ -55,6 +56,12 @@ public class OrderServlet extends HttpServlet {
                 orderDetail(req,resp ,session);
                 break;
             case "create":
+                resp.sendRedirect("/createOrder.jsp");
+                break;
+            case "removeItem":
+                CartServlet.removeP(req,resp);
+                session.setAttribute("soSp",CartServlet.checkProductCart());
+
                 resp.sendRedirect("/createOrder.jsp");
                 break;
 

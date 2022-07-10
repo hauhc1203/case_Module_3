@@ -87,12 +87,18 @@ public class CartServlet extends  HomeServlet{
         }else {
             cart.getDetail().put(product,1);
         }
-        cart.setTotalValue(product.getPrice()+cart.getTotalValue());
-//            Cookie cookie =new Cookie("cart",cart);
-
+        totalCart();
 
     }
-    public int checkProductCart(){
+    public static void totalCart(){
+        double total=0;
+        for (Map.Entry<Product, Integer> entry1 : cart.getDetail().entrySet()) {
+            total+=entry1.getKey().getPrice()*entry1.getValue();
+        }
+        cart.setTotalValue(total);
+    }
+
+    public static int checkProductCart(){
         int soSP=0;
         for (Map.Entry<Product, Integer> entry : cart.getDetail().entrySet()) {
             soSP+=entry.getValue();
@@ -100,7 +106,9 @@ public class CartServlet extends  HomeServlet{
         return soSP;
     }
 
-    public Map.Entry<Product,Integer> checkCart(Product product){
+
+
+    public static Map.Entry<Product,Integer> checkCart(Product product){
         for (Map.Entry<Product, Integer> entry : cart.getDetail().entrySet()) {
             if (entry.getKey().getIdProduct()==product.getIdProduct()){
                 return entry;
@@ -108,7 +116,7 @@ public class CartServlet extends  HomeServlet{
         }
         return null;
     }
-    public void removeP(HttpServletRequest req, HttpServletResponse resp){
+    public  static void removeP(HttpServletRequest req, HttpServletResponse resp){
         Map<Product,Integer> tmp=new HashMap<>();
         int idP= Integer.parseInt(req.getParameter("id"));
         for (Map.Entry<Product, Integer> entry : cart.getDetail().entrySet()) {
@@ -117,6 +125,8 @@ public class CartServlet extends  HomeServlet{
             }
         }
         cart.setDetail(tmp);
+        totalCart();
+
 
     }
     public void redirectToOrder(HttpServletRequest req, HttpServletResponse resp) throws IOException {
