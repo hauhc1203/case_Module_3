@@ -53,12 +53,9 @@
                 <td><input type="number" name="quantity" id="quantity"></td>
             </tr>
             <tr>
-            <tr>
-                <td>Đã bán</td>
-                <td><input type="number" name="quantity_sold" id="quantity_sold"></td>
-            <tr>
+
                 <td></td>
-                <td><input type="submit" value="Create customer"></td>
+                <td><button type="submit" >Tạo Sản Phẩm</td>
             </tr>
         </table>
     </fieldset>

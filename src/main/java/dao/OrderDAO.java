@@ -5,19 +5,16 @@ import model.Category;
 import model.Order;
 import model.Product;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class OrderDAO implements IDAO<Order> {
 
 
-    private static final String INSERT_ORDER = "INSERT INTO donHang (nameCategory) VALUES (?);";
+    private static final String INSERT_ORDER = "INSERT INTO donHang (idOrder,idAcc,statusDelivery,address) VALUES (?,?,?,?);";
+
     private static final String SELECT_ALL = "select * from donHang;";
     private static final String SELECT_ALL_BY_ID_ACC = "select * from donHang where idAcc=?;";
 
@@ -74,9 +71,65 @@ public class OrderDAO implements IDAO<Order> {
         return orders;
 
     }
-//Tao don hang (Dung)
+
+
+
+    private static final String INSERT_CTHD="insert into chiTietDH values(?,?,?)";
+
     @Override
     public boolean insert(Order order) {
+        Connection connection=null  ;
+        PreparedStatement preparedStatement=null;
+        PreparedStatement preparedStatement1=null;
+        try {
+             connection= ConnectDB.getConnect(); connection.setAutoCommit(false);
+             preparedStatement = connection.prepareStatement(INSERT_ORDER);
+            preparedStatement.setInt(1,order.getIdOrder());
+            preparedStatement.setInt(2,order.getAccount().getIdAccount());
+            preparedStatement.setString(3,order.getStatusDelivery());
+            preparedStatement.setString(4,order.getAddress());
+            preparedStatement.execute();
+            for (Map.Entry<Product, Integer> entry : order.getDetail().entrySet()) {
+                preparedStatement1=connection.prepareStatement(INSERT_CTHD);
+               preparedStatement1.setInt(1,order.getIdOrder());
+               preparedStatement1.setInt(2,entry.getKey().getIdProduct());
+               preparedStatement1.setInt(3,entry.getValue());
+               preparedStatement1.execute();
+            }
+            connection.commit();
+
+
+
+
+            return true;
+
+        } catch (SQLException e) {
+            try{
+                if(connection!=null)
+                    connection.rollback();
+            }catch(SQLException se2){
+                se2.printStackTrace();
+            }// Ket thuc khoi try
+
+        }finally {
+            try{
+                if(preparedStatement1!=null)
+                    preparedStatement1.close();
+            }catch(SQLException se2){
+            }
+            try{
+                if(preparedStatement!=null)
+                    preparedStatement.close();
+            }catch(SQLException se2){
+            }
+            try{
+                if(connection!=null)
+                    connection.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            }// Ket thuc khoi finally
+        }// Ket thuc khoi try
+
         return false;
     }
 

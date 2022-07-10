@@ -50,16 +50,15 @@ ProductDAO implements IDAO<Product> {
 
     @Override
     public boolean insert(Product product) {
-        String sql = "insert into sanpham value (?,?,?,?,?,?,?)";
+        String sql = "insert into  sanPham(idCategory,nameProduct,imgProduct,price,quantity) value (?,?,?,?,?)";
         try (Connection connection = ConnectDB.getConnect()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, product.getIdProduct());
-            preparedStatement.setInt(2, product.getCategory().getIdCategory());
-            preparedStatement.setString(3, product.getNameProduct());
-            preparedStatement.setString(4, product.getImgURL());
-            preparedStatement.setDouble(5, product.getPrice());
-            preparedStatement.setInt(6, product.getQuantity());
-            preparedStatement.setInt(7, product.getQuantity_sold());
+
+            preparedStatement.setInt(1, product.getCategory().getIdCategory());
+            preparedStatement.setString(2, product.getNameProduct());
+            preparedStatement.setString(3, product.getImgURL());
+            preparedStatement.setDouble(4, product.getPrice());
+            preparedStatement.setInt(5, product.getQuantity());
             return preparedStatement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -101,17 +100,16 @@ ProductDAO implements IDAO<Product> {
 
     @Override
     public boolean edit(Product product) {
-        String sql = "UPDATE sanpham SET nameProduct = ?,imgProduct = ?, " +
-                "price = ?,quantity = ?, idCategory = ?, Quantity_sold WHERE (idProduct = ?)";
+        String sql = "UPDATE sanPham SET nameProduct = ?,imgProduct = ?, price = ?,quantity = ?, idCategory = ?, quantity_sold=? WHERE idProduct = ?";
         try (Connection connection = ConnectDB.getConnect()) {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, product.getIdProduct());
-            preparedStatement.setInt(2, product.getCategory().getIdCategory());
-            preparedStatement.setString(3, product.getNameProduct());
-            preparedStatement.setString(4, product.getImgURL());
-            preparedStatement.setDouble(5, product.getPrice());
-            preparedStatement.setInt(6, product.getQuantity());
-            preparedStatement.setInt(7, product.getQuantity_sold());
+            preparedStatement.setInt(5, product.getCategory().getIdCategory());
+            preparedStatement.setString(1, product.getNameProduct());
+            preparedStatement.setString(2, product.getImgURL());
+            preparedStatement.setDouble(3, product.getPrice());
+            preparedStatement.setInt(4, product.getQuantity());
+            preparedStatement.setInt(6, product.getQuantity_sold());
+            preparedStatement.setInt(7, product.getIdProduct());
 
             return preparedStatement.execute();
         } catch (SQLException throwables) {

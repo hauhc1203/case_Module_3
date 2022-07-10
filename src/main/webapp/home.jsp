@@ -144,7 +144,7 @@
     width: 700px ;
     height: auto;
     display: none;
-    background-color: green;
+    background-color: wheat;
     border-radius: 15px;
     overflow:auto;
     max-height: 500px;

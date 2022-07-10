@@ -48,10 +48,7 @@
     <br>
 
     <table>
-        <%--            <tr>--%>
-        <%--                <td>Mã SP:</td>--%>
-        <%--                <td><input type="text" name="id" id="id"></td>--%>
-        <%--            </tr>--%>
+
         <tr>
             <td>Loại SP</td>
             <td><select  name="category" id="category">
@@ -64,7 +61,7 @@
             <td>Tên SP</td>
             <td><input type="text" name="nameProduct" id="nameProduct" value="${sessionScope.product.nameProduct}"></td>
         </tr>
-
+            <input name="oldIMG" value="${sessionScope.product.getImgURL()}" hidden >
             <td>Ảnh cũ</td>
             <td><img src="${sessionScope.product.getImgURL()}" style="width: 200px;height: 200px"></td>
 
