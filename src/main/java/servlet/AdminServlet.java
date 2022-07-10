@@ -47,6 +47,18 @@ public class AdminServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
+            case "editcategory":
+                id = Integer.parseInt(req.getParameter("id"));
+                Category category = categoryDAO.findCByID(id);
+                categories = categoryDAO.selectAll();
+                session.setAttribute("categories", category);
+                requestDispatcher = req.getRequestDispatcher("/admin/editcategory.jsp");
+                requestDispatcher.forward(req, resp);
+                break;
+            case "createcategory":
+                requestDispatcher = req.getRequestDispatcher("/admin/createcategory.jsp");
+                requestDispatcher.forward(req, resp);
+                break;
             case "create":
                 requestDispatcher = req.getRequestDispatcher("/admin/createproduct.jsp");
                 requestDispatcher.forward(req, resp);
@@ -101,6 +113,13 @@ public class AdminServlet extends HttpServlet {
                 productDAO.insert(product);
                 resp.sendRedirect("/admin");
                 break;
+            case "createcategory":
+                int Idcategory = Integer.parseInt(req.getParameter("category"));
+                String nameCategory = req.getParameter("nameCategory");
+                int productQuantity = Integer.parseInt(req.getParameter("productQuantity"));
+                Category category = new Category(Idcategory,nameCategory,productQuantity);
+                categoryDAO.insert(category);
+                resp.sendRedirect("/admin");
         }
     }
 }
