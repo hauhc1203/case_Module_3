@@ -20,7 +20,7 @@ public class CategoryDAO implements IDAO<Category> {
 
 
     @Override
-    public static ArrayList<Category> selectAll() {
+    public  ArrayList<Category> selectAll() {
         ArrayList<Category> categories = new ArrayList<>();
         try (Connection connection = ConnectDB.getConnect(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_CATEGORY)) {
             ResultSet rs = preparedStatement.executeQuery();
