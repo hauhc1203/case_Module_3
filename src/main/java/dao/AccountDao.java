@@ -2,6 +2,7 @@ package dao;
 
 import connect.ConnectDB;
 import model.Account;
+import model.Category;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,33 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class AccountDAO implements IDAO<Account>{
-    String sql = "select * from taiKhoan where phoneNumber = ? and passWord =?";
+public class AccountDAO implements IDAO<Account> {
 
-
-
+    private static final String INSERT_ACCOUNT = "INSERT INTO taiKhoan (nameCategory) VALUES (?);";
+    private static final String SELECT_ALL = "select * from taiKhoan;";
     private static final String SEARCH_ACCOUNT = "select * from taiKhoan where idAccount = ? ;";
-    public Account getAccount(String phoneNumbe, String passWord) {
-        ConnectDB Connect_MySQL = null;
-        try (Connection connection = Connect_MySQL.getConnect()) {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, phoneNumbe);
-            statement.setString(2, passWord);
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
+    private static final String DELETE_ACCOUNT = "delete from taiKhoan where idCategory = ?;";
+    private static final String SELECT_ACCOUNT= "select * from taiKhoan  where idAccount = ?;";
 
-            int idacount = resultSet.getInt("idAccount");
-            String name = resultSet.getString("fullName");
-            String phone = resultSet.getString("phoneNumber");
-            String pass = resultSet.getString("passWord");
-            String role = resultSet.getString("role");
+    private  static  final String UPDATE_ACCOUNT="UPDATE taiKhoan SET nameCategory=?;";
 
-            return new Account(idacount, phone, pass, name, role);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
-    }
 
     @Override
     public ArrayList<Account> selectAll() {
@@ -75,5 +59,4 @@ public class AccountDAO implements IDAO<Account>{
     public boolean edit(Account account) {
         return false;
     }
-
 }
