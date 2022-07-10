@@ -55,8 +55,51 @@ public class AccountDAO implements IDAO<Account> {
         return null;
     }
 
+
+
+    public boolean create(String fullName, String phoneNumber, String passWord) {
+        String sql = "INSERT into taiKhoan( fullName ,phoneNumber , passWord )  value (?,?,?)";
+        ConnectDB Connect_MySQL = null;
+        try (Connection connection = Connect_MySQL.getConnect()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, fullName);
+            preparedStatement.setString(2, phoneNumber);
+            preparedStatement.setString(3, passWord);
+
+            return preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+
     @Override
     public boolean edit(Account account) {
         return false;
+    }
+
+
+    String sql = "select * from taiKhoan where phoneNumber = ? and passWord =?";
+
+    public Account getAccount(String phoneNumbe, String passWord) {
+        ConnectDB Connect_MySQL = null;
+        try (Connection connection = Connect_MySQL.getConnect()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, phoneNumbe);
+            statement.setString(2, passWord);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+            int idacount = resultSet.getInt("idAccount");
+            String name = resultSet.getString("fullName");
+            String phone = resultSet.getString("phoneNumber");
+            String pass = resultSet.getString("passWord");
+            String role = resultSet.getString("role");
+
+            return new Account(idacount, phone, pass, name, role);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 }

@@ -202,7 +202,7 @@
 
 
                                         <div class="row mb-4 d-flex  align-items-center" style="display: flex;justify-content: center;}">
-                                            <a href="/cart?action=updateQuantity" style="width: 15%" id="haha"><button class="btn btn-info">Order</button></a>
+                                            <a href="/orders?action=create" style="width: 15%" id="haha"><button class="btn btn-info">Order</button></a>
                                         </div>
                                 </div>
                                 </div>

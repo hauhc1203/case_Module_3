@@ -58,7 +58,10 @@ public class CartServlet extends  HomeServlet{
             case "remove":
                 removeP(req,resp);
 
+                break;
 
+            case "updateQuantity":
+                redirectToOrder(req,resp);
                 break;
 
 
@@ -66,6 +69,7 @@ public class CartServlet extends  HomeServlet{
         session.setAttribute("soSp",checkProductCart());
         session.setAttribute("cart",cart);
         resp.sendRedirect("/home");
+
     }
 
 
@@ -113,6 +117,10 @@ public class CartServlet extends  HomeServlet{
             }
         }
         cart.setDetail(tmp);
+
+    }
+    public void redirectToOrder(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.sendRedirect("/orders");
 
     }
 
