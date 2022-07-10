@@ -301,8 +301,8 @@
         <td  colspan="5" style="text-align: left " >
             <div class="hau">
                 <form action="/admin?action=search" method="post" style="margin: 0">
-                    <input type="search" placeholder="nhập vào tên" name="key" class="search" required>
-                    <button type="submit" class="btn btn-info">Search</button>
+                    <input type="search" placeholder="nhập tên sản phầm" name="key" class="search" required>
+                    <button type="submit" class="btn btn-info">Tìm kiếm </button>
                 </form>
             </div>
         </td>
@@ -348,7 +348,7 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2>Quản Lý <b>Sản Phẩm</b></h2>
+                            <h2>Danh Sách <b>Sản Phẩm</b></h2>
                         </div>
                         <div class="col-sm-6">
                             <a href="/admin?action=create" methods="post" class="btn btn-success" ><i class="material-icons">&#xE147;</i> <span>Thêm sản phẩm mới</span></a>

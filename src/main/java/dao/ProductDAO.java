@@ -16,6 +16,7 @@ ProductDAO implements IDAO<Product> {
     private static final String INSERT_CATEGORY = "INSERT INTO sanPham (nameCategory) VALUES (?);";
     private static final String SELECT_ALL = "select * from sanPham;";
     private static final String SEARCH_CATEGORY = "select * from sanPham where nameCategory like ? ;";
+    private static final String SEARCH_PRODUCT = "select * from sanPham where nameProduct like ? ;";
     private static final String DELETE_PRODUCT = "delete from sanPham where idProduct = ?;";
     private static final String SELECT_PRODUCT = "select * from sanPham  where idProduct = ?;";
 
@@ -159,4 +160,23 @@ ProductDAO implements IDAO<Product> {
         }
         return products;
     }
+    public Product findCByNameProduct(int id) {
+        try (Connection connection = ConnectDB.getConnect(); PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_PRODUCT)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            int idProduct = resultSet.getInt("idProduct");
+            int idCategory = resultSet.getInt("idCategory");
+            String name = resultSet.getString("nameProduct");
+            String imgURL = resultSet.getString("imgProduct");
+            double price = resultSet.getDouble("price");
+            int quantity = resultSet.getInt("quantity");
+            int quantity_sold = resultSet.getInt("quantity_sold");
+            return new Product(idProduct, name, categoryDAO.findCByID(idCategory), imgURL, price, quantity, quantity_sold);
+        } catch (SQLException e) {
+
+        }
+        return null;
+    }
+
 }

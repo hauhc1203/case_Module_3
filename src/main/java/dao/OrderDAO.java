@@ -32,7 +32,7 @@ public class OrderDAO implements IDAO<Order> {
 
     @Override
     //hien thi don hang
-    public ArrayList<Order> selectAll() {
+    publ`ic ArrayList`<Order> selectAll() {
         ArrayList<Order> orders =new ArrayList<>();
         try (Connection connection= ConnectDB.getConnect(); PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)){
             ResultSet rs = preparedStatement.executeQuery();
