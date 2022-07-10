@@ -19,7 +19,7 @@
 <table>
     <tr>
         <td> Loại SP</td>
-        <td> <input type="number" name="category" id="category" value="${sessionScope.category.}">
+        <td> <input type="number" name="category" id="category" value="${sessionScope.category.idCategory}">
 
         </td>
     </tr>
