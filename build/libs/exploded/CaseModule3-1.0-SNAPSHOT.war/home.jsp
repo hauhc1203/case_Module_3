@@ -141,7 +141,7 @@
 <%--Cart--%>
 
 <div style="  position: fixed ;top:8%;left: 60% ; font-size: 23px;
-    width: 700px ;
+    width: 800px ;
     height: auto;
     display: none;
     background-color: wheat;
@@ -199,6 +199,18 @@
                                             </div>
                                             <hr class="my-4">
                                         </c:forEach>
+                                        <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                        <div class="col-md-12 col-lg-4 col-xl-4">
+                                            <h4>Tổng tiền: </h4>
+
+                                        </div>
+
+                                        <div class="col-md-3 col-lg-3 col-xl-3">
+                                            <h4>${sessionScope.cart.getTotalValue()} VNĐ</h4>
+
+
+                                        </div>
+
 
 
                                         <div class="row mb-4 d-flex  align-items-center" style="display: flex;justify-content: center;}">
@@ -209,6 +221,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

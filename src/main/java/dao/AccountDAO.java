@@ -65,7 +65,6 @@ public class AccountDAO implements IDAO<Account> {
             preparedStatement.setString(1, fullName);
             preparedStatement.setString(2, phoneNumber);
             preparedStatement.setString(3, passWord);
-
             return preparedStatement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
