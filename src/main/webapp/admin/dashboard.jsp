@@ -353,7 +353,7 @@
                         <div class="col-sm-6">
                             <a href="/admin?action=create" methods="post" class="btn btn-success" ><i class="material-icons">&#xE147;</i> <span>Thêm sản phẩm mới</span></a>
                             <a><form action="/admin?action=search" method="post" style="margin: 0">
-                                <input type="search" placeholder="nhập vào tên" name="key"  class="search">
+                                <input type="search" placeholder="nhập vào tên" name="key1"  class="search">
                                 <button type="submit" class="btn btn-info">Search</button>
                             </form>
                             </a>

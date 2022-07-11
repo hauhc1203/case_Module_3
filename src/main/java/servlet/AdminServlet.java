@@ -75,8 +75,12 @@ public class AdminServlet extends HttpServlet {
                 requestDispatcher = req.getRequestDispatcher("/edit"+"category.jsp");
                 requestDispatcher.forward(req, resp);
                 break;
+            case "search":
+                session.setAttribute("categories", categories);
+                requestDispatcher = req.getRequestDispatcher("/admin/dashboard.jsp");
+                requestDispatcher.forward(req, resp);
             default:
-                products = productDAO.selectAll();
+
                 session.setAttribute("categories", categories);
                 session.setAttribute("products", products);
                 requestDispatcher = req.getRequestDispatcher("/admin/dashboard.jsp");
@@ -138,6 +142,14 @@ public class AdminServlet extends HttpServlet {
                 Category categories = new Category(nameCategory);
                 categoryDAO.insert(categories);
                 resp.sendRedirect("/admin");
+                break;
+            case "search":
+                String key =req.getParameter("key1");
+                key = "%"+key+"%";
+                HttpSession session=req.getSession();
+                session.setAttribute("products", productDAO.search(key));
+
+                resp.sendRedirect("/admin?action=search");
                 break;
 
         }

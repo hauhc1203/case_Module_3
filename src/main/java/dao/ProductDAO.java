@@ -22,7 +22,7 @@ ProductDAO implements IDAO<Product> {
 
     private static final String UPDATE_CATEGORY = "UPDATE sanPham SET nameCategory=?;";
 
-    private static final String SELECT_TOP6="select * from sanPham  order by quantity_sold DESC limit 6;";
+    private static final String SELECT_TOP6="select * from   sanPham  order by quantity_sold DESC limit 6;";
 
     private static final String SELECT_BY_CATEGORY="select * from sanPham  where idCategory=?;";
     CategoryDAO categoryDAO = new CategoryDAO();
@@ -177,6 +177,34 @@ ProductDAO implements IDAO<Product> {
 
         }
         return null;
+    }
+
+    private static final String SEARCH_HS = "select * from sanPham where nameProduct like ? ;";
+
+    public ArrayList<Product> search(String key) {
+        ArrayList<Product> products =new ArrayList<>();
+        try (Connection connection= ConnectDB.getConnect(); PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_HS)){
+            preparedStatement.setString(1,key);
+
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int idProduct = rs.getInt("idProduct");
+                int idCategory = rs.getInt("idCategory");
+                String name = rs.getString("nameProduct");
+                String imgURL = rs.getString("imgProduct");
+                double price = rs.getDouble("price");
+                int quantity = rs.getInt("quantity");
+                int quantity_sold = rs.getInt("quantity_sold");
+                products.add(new Product(idProduct, name, categoryDAO.findCByID(idCategory), imgURL, price, quantity, quantity_sold));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return products;
     }
 
 }
